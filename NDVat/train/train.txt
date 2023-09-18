@@ -1,0 +1,6 @@
+data/obj_train_data/anhvat_391_png.rf.e36664ad4f41057ba08a481268e63e6f.jpg
+data/obj_train_data/anhvat_46_png.rf.9ea71eeae864ae053f17863933675f9e.jpg
+data/obj_train_data/anhvat_645_png.rf.16c34bb2be9bf47999838b3575476825.jpg
+data/obj_train_data/anhvat_670_png.rf.90fe337f938151edf643ef610262fdc0.jpg
+data/obj_train_data/anhvat_681_png.rf.b70cc51750f8cffdb37b1ab6ae289ed5.jpg
+data/obj_train_data/anhvat_692_png.rf.089a731feb7e3f2dce5db14f23d458e4.jpg
