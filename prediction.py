@@ -1,21 +1,14 @@
-#https://docs.ultralytics.com/modes/predict/
-
 from ultralytics import YOLO
-from PIL import Image
-import cv2
 
+# Load a model
+model = YOLO('yolov8n-seg.pt')  # load an official model
+model = YOLO('best.pt')  # load a custom model
 
-
-# Load a pretrained YOLOv8n model
-model = YOLO('yolov8n.pt')  # load an official model
-model = YOLO('/content/runs/detect/train2/weights/best.pt')  # load a custom model
-
-# Define path to the image file
-# source = '/content/drive/MyDrive/NhanDienvat/NDVat/train/images/train/anhvat_692_png.rf.089a731feb7e3f2dce5db14f23d458e4.jpg'
-
+# Predict with the model
+results = model('20230919_104710_jpg.rf.82ed36d6e0d9e6512348e114d1a0a375.jpg', save = True)  # predict on an image
 #picture
 # results = model.predict(source, save=True, imgsz=640, conf=0.5)
-results = model('/content/drive/MyDrive/NhanDienvat/anhvat_123.png',save=True)
+
 
 
 # View results

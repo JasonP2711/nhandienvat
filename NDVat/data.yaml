@@ -1,0 +1,13 @@
+train: /content/drive/MyDrive/NhanDienvat/NDVat/train/images
+val: /content/drive/MyDrive/NhanDienvat/NDVat/valid/images
+test: /content/drive/MyDrive/NhanDienvat/NDVat/test/images
+
+nc: 4
+names: ['mat dung', 'mat sai1', 'mat sai2', 'mat sai3']
+
+roboflow:
+  workspace: danang-university
+  project: ndv-xlsrq
+  version: 1
+  license: CC BY 4.0
+  url: https://universe.roboflow.com/danang-university/ndv-xlsrq/dataset/1
