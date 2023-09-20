@@ -1,0 +1,63 @@
+boxes: Đây là tensor chứa các thông tin về bounding boxes của các đối tượng được phát hiện trong hình ảnh. Mỗi dòng của tensor này tương ứng với một bounding box và bao gồm các thông tin sau:
+
+Cột 1 và 2: Tọa độ x và y của góc trên bên trái của bounding box.
+Cột 3 và 4: Tọa độ x và y của góc dưới bên phải của bounding box.
+Cột 5: Độ tự tin (confidence) của việc phát hiện.
+Cột 6: ID của lớp (class ID) của đối tượng được phát hiện.
+cls: Đây là tensor chứa ID của lớp của các đối tượng được phát hiện.
+
+conf: Đây là tensor chứa giá trị độ tự tin (confidence) của các đối tượng được phát hiện.
+
+data: Tương tự như boxes, đây là tensor chứa thông tin về bounding boxes của các đối tượng, nhưng được tổ chức theo cấu trúc tensor khác.
+
+id: Đây là một thuộc tính (attribute) không có giá trị cụ thể trong kết quả.
+
+is_track: Đây là một thuộc tính (attribute) đánh dấu xem liệu các bounding boxes có phải là theo dõi các đối tượng hay không.
+
+orig_shape: Đây là kích thước gốc của hình ảnh trước khi được xử lý bởi mô hình.
+
+shape: Đây là kích thước của hình ảnh sau khi được xử lý bởi mô hình.
+
+xywh: Đây là tensor chứa thông tin về tọa độ và kích thước của bounding boxes dưới dạng (x_center, y_center, width, height).
+
+xywhn: Đây là tensor chứa thông tin tương tự xywh, nhưng được chuẩn hóa trong khoảng từ 0 đến 1.
+
+xyxy: Đây là tensor chứa thông tin về tọa độ của bounding boxes dưới dạng (x_min, y_min, x_max, y_max).
+
+xyxyn: Đây là tensor chứa thông tin tương tự xyxy, nhưng được chuẩn hóa trong khoảng từ 0 đến 1.
+
+
+////////////////////////////////////
+
+
+Để thêm tâm của bounding box vào ảnh, bạn có thể sử dụng thư viện OpenCV (hoặc một thư viện xử lý ảnh tương tự). Dưới đây là cách bạn có thể thực hiện điều này:
+
+Trích xuất tọa độ tâm của bounding boxes từ tensor xywh (hoặc xyxy nếu bạn muốn).
+
+Vẽ một điểm hoặc một đường trỏ tới tâm của bounding box trên ảnh gốc.
+
+Dưới đây là một ví dụ về cách thực hiện điều này:
+
+import cv2
+import numpy as np
+
+# Load the image
+image = cv2.imread('/content/drive/MyDrive/NhanDienvat/NDVat/train/images/20230919_104657_jpg.rf.f419369aed5b63d2614e2c2014ef43e5.jpg')
+
+# Extract the 'xywh' tensor from the results (assuming a single image prediction)
+xywh = results.pred[0].xywh
+
+# Iterate through bounding boxes and draw a dot at the center
+for bbox in xywh:
+    x_center, y_center, width, height = bbox[:4]
+    x_center = int(x_center)
+    y_center = int(y_center)
+    cv2.circle(image, (x_center, y_center), 5, (0, 255, 0), -1)  # Draw a green circle at the center
+
+# Save the image with center points
+cv2.imwrite('/content/center_points.jpg', image)
+
+# Display the image (optional)
+cv2.imshow('Image with Center Points', image)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
