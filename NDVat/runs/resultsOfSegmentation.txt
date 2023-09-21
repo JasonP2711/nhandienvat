@@ -27,6 +27,28 @@ xyxy: Đây là tensor chứa thông tin về tọa độ của bounding boxes d
 xyxyn: Đây là tensor chứa thông tin tương tự xyxy, nhưng được chuẩn hóa trong khoảng từ 0 đến 1.
 
 
+
+Thông tin về mask trong ultralytics.engine.results.Masks bao gồm:
+
+data và masks: Đây là hai tensor có cùng kích thước, đại diện cho mask của các vật thể trong hình ảnh. Mỗi tensor có kích thước (1, H, W), trong đó H là chiều cao của mask và W là chiều rộng của mask. Mask được biểu diễn dưới dạng ma trận các giá trị số thực trong khoảng từ 0 đến 1, trong đó 0 thường đại diện cho vùng không có vật thể và 1 đại diện cho vùng chứa vật thể.
+
+orig_shape: Kích thước của hình ảnh gốc trước khi được thay đổi kích thước để phù hợp với mô hình.
+
+segments: Một danh sách các điểm trên biên của mask, mỗi điểm được biểu diễn bằng tọa độ (x, y) trên ma trận mask.
+
+shape: Kích thước của tensor mask, có dạng (1, H, W), trong đó H là chiều cao của mask và W là chiều rộng của mask.
+
+xy và xyn: xy là danh sách các điểm trên biên của mask, mỗi điểm được biểu diễn bằng tọa độ (x, y) trong định dạng tensor. xyn là danh sách tọa độ của các điểm trên biên của mask được chuẩn hóa trong khoảng từ 0 đến 1, thường được sử dụng để vẽ mask trên hình ảnh.
+
+Với thông tin này, bạn có thể truy cập và xử lý mask của các vật thể được phát hiện trong hình ảnh.
+
+
+
+
+
+
+
+
 ////////////////////////////////////
 
 
