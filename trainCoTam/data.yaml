@@ -1,0 +1,13 @@
+train: ../train/images
+val: ../valid/images
+test: ../test/images
+
+nc: 5
+names: ['mat dung', 'mat sai1', 'mat sai2', 'mat sai3', 'tam mat dung']
+
+roboflow:
+  workspace: danang-university
+  project: ndv-xlsrq
+  version: 2
+  license: CC BY 4.0
+  url: https://universe.roboflow.com/danang-university/ndv-xlsrq/dataset/2
