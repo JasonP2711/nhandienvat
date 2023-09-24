@@ -1,49 +1,22 @@
-from ultralytics import YOLO
-import cv2
-
-
-image = cv2.imread(r'.\NDVat\train\images\20230919_104716_jpg.rf.747a0be5e965e191970e6a6c41c3ae68.jpg')
-
-# Load a model
-model = YOLO('yolov8n-seg.pt')  # load an official model
-model = YOLO(r'.\NDVat\runs\segment\train\weights\best.pt')  # load a custom model
-
-# Predict with the model
-results = model(r'.\NDVat\train\images\20230919_104716_jpg.rf.747a0be5e965e191970e6a6c41c3ae68.jpg', save = True)  # predict on an image
-#picture
-# results = model.predict(source, save=True, imgsz=640, conf=0.5)
-
-
-# View results
-myList = []
-for r in results:
-    print(r.boxes.xywh)  # print the Boxes object containing the detection bounding boxes
-    myList.append(r.boxes.xywh)
-
-
-print(myList)
-
-#còn lỗi
-
 
 # ///////////////////////////////////////////////////////////
 
 from ultralytics import YOLO
 import cv2
 
-link = '/content/nhandienvat/trainCoTam/train/images/20230919_104710_jpg.rf.5649bd50e968333b67fa7da411f178ec.jpg'
+link = '/content/nhandienvat/detectByYolov8/dataset_specialItems/train/images/20230922_155210_jpg.rf.49d8a0e2e7e34fc5c5738efdc3dce753.jpg'
 
 image = cv2.imread(link)
 
-gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-cv2.imwrite('output_image_gray.jpg', gray_image)
+# gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+# cv2.imwrite('output_image_gray.jpg', gray_image)
 
 # Load a model
 model = YOLO('yolov8n-seg.pt')  # load an official model
-model = YOLO('/content/runs/segment/train3/weights/best.pt')  # load a custom model
+model = YOLO('/content/nhandienvat/runs/segment/train/weights/best.pt')  # load a custom model
 
 # Predict with the model
-results = model("/content/output_image_gray.jpg", save = True)  # predict on an image
+results = model("/content/nhandienvat/detectByYolov8/dataset_specialItems/train/images/20230922_155210_jpg.rf.49d8a0e2e7e34fc5c5738efdc3dce753.jpg", save = True)  # predict on an image
 
 
 myList = []
@@ -61,7 +34,7 @@ for r in results:
     checkitem = r.boxes.cls.tolist()
     # print(int(checkitem[2]))
 print("myList: ",myList)
-list = myList[1]
+list = myList[4]
 # print(list)
 
 
@@ -71,8 +44,6 @@ list = myList[1]
 
 
 count = 0
-
-# while count < 
 
 
 # print("list masks: ",mylistmask.tolist()[0])
@@ -84,12 +55,12 @@ color = (0, 255, 0)
 thickness = -1  # Đặt -1 để vẽ một điểm đầy đủ
 
 # Vẽ điểm trên hình ảnh
-cv2.circle(image, point, 3, (0, 0, 255), thickness)
+cv2.circle(image, (int(list[0]),int(list[1])), 3, (0, 0, 255), thickness)
 
 
 count = 0
 while count < len(mylistmask):
-  if checkitem[count] == 0.0:
+  if checkitem[count] == 4.0:
     print("count: ", count)
     print(mylistmask[count].tolist())
     listitem = mylistmask[count].tolist()
@@ -105,7 +76,7 @@ while count < len(mylistmask):
       totalx = totalx + coodinate[0]
       totaly = totaly + coodinate[1]
       # cv2.circle(image, (int(coodinate[0]),int(coodinate[1])), 3, color, thickness)
-      cv2.drawMarker(image, (coodinate[0],coodinate[1]), color, markerType=cv2.MARKER_STAR, markerSize=2)
+      cv2.drawMarker(image, (int(coodinate[0]),int(coodinate[1])), color, markerType=cv2.MARKER_STAR, markerSize=2)
       count2 = count2 + 1
     x = totalx / len(listitem)
     y = totaly / len(listitem)

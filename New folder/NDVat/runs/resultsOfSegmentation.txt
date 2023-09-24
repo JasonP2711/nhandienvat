@@ -43,7 +43,19 @@ xy và xyn: xy là danh sách các điểm trên biên của mask, mỗi điểm
 Với thông tin này, bạn có thể truy cập và xử lý mask của các vật thể được phát hiện trong hình ảnh.
 
 
+/////////////////////////////////
 
+OpenCV cung cấp một số phương pháp để xác định góc quay của một vật trong một ảnh. Dưới đây là một số cách thường được sử dụng:
+
+Sử dụng Hough Line Transform (Biến đổi Hough cho đường thẳng): Đây là một trong những phương pháp phổ biến để xác định góc quay của vật thể trên ảnh. Bạn có thể sử dụng hàm cv2.HoughLines() để tìm các đường thẳng trong ảnh sau đó tính toán góc giữa đường thẳng và trục tọa độ.
+
+Sử dụng Feature Matching (Khớp đặc trưng): Bạn có thể sử dụng thuật toán khớp đặc trưng như SIFT (Scale-Invariant Feature Transform) hoặc SURF (Speeded-Up Robust Features) để tìm các điểm đặc trưng trên vật thể và sau đó tính toán góc quay từ các điểm này.
+
+Sử dụng Contour Detection (Phát hiện đường viền): Nếu vật thể có hình dạng đặc trưng, bạn có thể sử dụng hàm cv2.findContours() để tìm đường viền của vật thể và sau đó tính toán góc quay dựa trên hướng của đường viền.
+
+Sử dụng Homography: Nếu bạn có một vật thể với biến đổi homography (một loại biến đổi affine hoặc perspective), bạn có thể sử dụng hàm cv2.findHomography() để xác định ma trận homography và sau đó tính toán góc quay từ ma trận này.
+
+Dưới đây là một ví dụ sử dụng phương pháp Hough Line Transform để xác định góc quay của vật thể trong ảnh:
 
 
 
