@@ -51,7 +51,7 @@ Sử dụng Hough Line Transform (Biến đổi Hough cho đường thẳng): Đ
 
 Sử dụng Feature Matching (Khớp đặc trưng): Bạn có thể sử dụng thuật toán khớp đặc trưng như SIFT (Scale-Invariant Feature Transform) hoặc SURF (Speeded-Up Robust Features) để tìm các điểm đặc trưng trên vật thể và sau đó tính toán góc quay từ các điểm này.
 
-Sử dụng Contour Detection (Phát hiện đường viền): Nếu vật thể có hình dạng đặc trưng, bạn có thể sử dụng hàm cv2.findContours() để tìm đường viền của vật thể và sau đó tính toán góc quay dựa trên hướng của đường viền.
+=>> (không dùng được) Sử dụng Contour Detection (Phát hiện đường viền): Nếu vật thể có hình dạng đặc trưng, bạn có thể sử dụng hàm cv2.findContours() để tìm đường viền của vật thể và sau đó tính toán góc quay dựa trên hướng của đường viền.
 
 Sử dụng Homography: Nếu bạn có một vật thể với biến đổi homography (một loại biến đổi affine hoặc perspective), bạn có thể sử dụng hàm cv2.findHomography() để xác định ma trận homography và sau đó tính toán góc quay từ ma trận này.
 
@@ -93,5 +93,45 @@ cv2.imwrite('/content/center_points.jpg', image)
 
 # Display the image (optional)
 cv2.imshow('Image with Center Points', image)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+
+//////Để tính toán góc xoay của một đường thẳng nằm trong một hình ảnh, bạn có thể sử dụng một số phương pháp xử lý hình ảnh và toán học. Dưới đây là một cách tiêu biểu để thực hiện điều này:
+
+Phát hiện đường thẳng: Đầu tiên, bạn cần phát hiện đường thẳng trong hình ảnh. OpenCV cung cấp một số phương pháp phát hiện đường thẳng, chẳng hạn như cv2.HoughLines hoặc cv2.HoughLinesP dựa trên biến đổi Hough.
+
+Tính toán góc xoay: Sau khi bạn đã có danh sách các đường thẳng được phát hiện, bạn có thể tính toán góc xoay của mỗi đường thẳng. Để làm điều này, bạn có thể sử dụng hàm toán học như atan2 (tính toán góc dựa trên các tọa độ của đầu mút của đường thẳng) hoặc arctan (tính toán góc dựa trên hệ số góc của đường thẳng).
+
+Dưới đây là một ví dụ cụ thể sử dụng OpenCV để tính toán góc xoay của đường thẳng:
+
+python
+Copy code
+import cv2
+import numpy as np
+
+# Đọc hình ảnh
+image = cv2.imread('image_with_line.jpg', cv2.IMREAD_GRAYSCALE)
+
+# Phát hiện đường thẳng bằng biến đổi Hough
+lines = cv2.HoughLines(image, 1, np.pi / 180, threshold=100)
+
+# Tính toán góc xoay của từng đường thẳng và chuyển đổi thành độ
+for rho, theta in lines[:, 0]:
+    angle = theta * 180 / np.pi
+    print(f'Góc xoay: {angle} độ')
+
+# Hiển thị hình ảnh với đường thẳng đã phát hiện
+for rho, theta in lines[:, 0]:
+    a = np.cos(theta)
+    b = np.sin(theta)
+    x0 = a * rho
+    y0 = b * rho
+    x1 = int(x0 + 1000 * (-b))
+    y1 = int(y0 + 1000 * (a))
+    x2 = int(x0 - 1000 * (-b))
+    y2 = int(y0 - 1000 * (a))
+    cv2.line(image, (x1, y1), (x2, y2), (0, 0, 255), 2)
+
+cv2.imshow('Image with Lines', image)
 cv2.waitKey(0)
 cv2.destroyAllWindows()

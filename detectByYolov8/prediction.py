@@ -4,7 +4,7 @@
 from ultralytics import YOLO
 import cv2
 
-link = r'E:\My_Code\NhanDienvat\detectByYolov8\dataset_specialItems\train\images\20230922_155418_jpg.rf.296522d801c93045bc8ae684fc4fb48f.jpg'
+link = r'E:\My_Code\NhanDienvat\detectByYolov8\dataset_specialItems\train\images\20230922_155058_jpg.rf.f9c8117af8571624c38fa89e5ba3b55c.jpg'
 
 image = cv2.imread(link)
 
@@ -16,7 +16,7 @@ model = YOLO('yolov8n-seg.pt')  # load an official model
 model = YOLO(r'E:\My_Code\NhanDienvat\runs\segment\train\weights\best.pt')  # load a custom model
 
 # Predict with the model
-results = model(r"E:\My_Code\NhanDienvat\detectByYolov8\dataset_specialItems\train\images\20230922_155418_jpg.rf.296522d801c93045bc8ae684fc4fb48f.jpg", save = True)  # predict on an image
+results = model(r"E:\My_Code\NhanDienvat\detectByYolov8\dataset_specialItems\train\images\20230922_155058_jpg.rf.f9c8117af8571624c38fa89e5ba3b55c.jpg", save = True)  # predict on an image
 
 
 myList = []
@@ -25,10 +25,11 @@ mylistmask = []
 
 checkitem = []
 for r in results:
-    mylistmask = r.masks.xy
+    # mylistmask = r.masks.xy #ssử dụng nếu dùng phương pháp tìm tọa độ tâm theo các điểm masks
     # print("mask: ",r.masks[0].xy[0])
-    print("shape: ",r.masks.shape)
-    print(r.boxes)  # print the Boxes object containing the detection bounding boxes
+    # print("shape: ",r.masks.shape)
+    print("masks: ",r.masks)
+    print("boxes: ",r.boxes)  # print the Boxes object containing the detection bounding boxes
     myList = r.boxes.xywh.tolist()
     print(r.boxes.xywh.tolist())
     checkitem = r.boxes.cls.tolist()
@@ -50,7 +51,12 @@ while count < len(checkitem):
     # Kích thước của điểm
     thickness = -1  # Đặt -1 để vẽ một điểm đầy đủ
     # Vẽ điểm trên hình ảnh
-    cv2.circle(image, (int(list[0]),int(list[1])), 3, (0, 0, 255), thickness)
+    cv2.circle(image, (int(list[0]),int(list[1])), 3, (0, 0, 255), thickness) #chấm điểm vào ảnh ở tọa độ tâm của bounding box của lỗ tâm
+    # in tọa độ của tâm
+    text = f"({int(list[0])}, {int(list[1])})"
+    cv2.putText(image, text, (int(list[0])+30,int(list[1])+30), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
+    cv2.line(image, (int(list[0]),int(list[1])), (int(list[0]) + 50, int(list[1])), (0, 0, 255), 2)  # Vẽ trục X (màu đỏ)
+    cv2.line(image, (int(list[0]),int(list[1])), (int(list[0]), int(list[1]) + 50), (0, 255, 0), 2)  # Vẽ trục Y (màu xanh lá)
   count = count + 1
 # print("list masks: ",mylistmask.tolist()[0])
 
