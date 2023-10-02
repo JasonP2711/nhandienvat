@@ -8,7 +8,7 @@ from math import atan2, cos, sin, sqrt, pi
 import matplotlib.pyplot as plt
 import matplotlib.colors as mcolors
 
-link = r'E:\My_Code\NhanDienvat\detectByYolov8\dataset_specialItems\train\images\20230922_155040_jpg.rf.135c858726962230e85c829b187e7333.jpg'
+link = r'E:\My_Code\NhanDienvat\detectByYolov8\dataset_specialItems\train\images\20230922_155311_jpg.rf.d9e71c3fb09e56d9448ac554eb0694b0.jpg'
 
 image = cv2.imread(link)
 
@@ -63,50 +63,6 @@ def getOrientation(pts, img):
  return degree
 
 
-# beta = -50  # Giảm độ sáng
-
-# # Sử dụng hàm cv2.convertScaleAbs để giảm độ sáng của ảnh
-# src = cv2.convertScaleAbs(image, alpha=1, beta=beta)
-
-
-# # Check if image is loaded successfully
-# if src is None:
-# #  print('Could not open or find the image: ', args.input)
-#  exit(0)
-# # cv2.imshow('src', src)
-# # Convert image to grayscale
-# gray_picture = cv2.cvtColor(src, cv2.COLOR_BGR2GRAY)
-
-# gray_inverted = cv2.bitwise_not(gray_picture)
-# # Convert image to binary
-# _, bw = cv2.threshold(gray_picture, 50, 255, cv2.THRESH_BINARY | cv2.THRESH_OTSU)
-# contours, _ = cv2.findContours(bw, cv2.RETR_LIST, cv2.CHAIN_APPROX_NONE)
-# for i, c in enumerate(contours):
-#  # Calculate the area of each contour
-#  area = cv2.contourArea(c)
-#  # Ignore contours that are too small or too large
-#  if area < 1e2*3 or 1e5 < area:
-#   continue
-#  # Draw each contour only for visualisation purposes
-#  cv2.drawContours(src, contours, i, (0, 0, 255), 2)
-#  # Find the orientation of each shape
-#  getOrientation(c, src)
-#  cv2.imwrite('orientation_image.jpg',src)
-# //////////////
-# cv2.imshow('output', src)
-# Assuming you have a grayscale image in the 'gray_picture' variable
-# Normalize the grayscale values to be between 0 and 1
-
-# plt.imshow(bw, cmap="gray")
-# plt.title("Bitwise Gray")
-# plt.axis("off")
-# plt.show()
-
-# plt.imshow(gray_inverted, cmap="gray")
-# plt.title("gray_inverted Gray")
-# plt.axis("off")
-# plt.show()
-
 # ///////////////////////////////////
 
 # Load a model
@@ -123,19 +79,11 @@ mylistmask = []
 
 checkitem = []
 for r in results:
-    # mylistmask = r.masks.xy #ssử dụng nếu dùng phương pháp tìm tọa độ tâm theo các điểm masks
-    # print("mask: ",r.masks[0].xy[0])
-    # print("shape: ",r.masks.shape)
-    # print("masks: ",r.masks)
-    # print("boxes: ",r.boxes)  # print the Boxes object containing the detection bounding boxes
     myList = r.boxes.xywh.tolist()
     checkitem = r.boxes.cls.tolist()
-    # print(int(checkitem[2]))
-# print("myList: ",myList)
-# print("length: ",len(myList))
 
 
-# print(list)
+
 count = 0
 
 while count < len(checkitem):
@@ -201,42 +149,11 @@ while count < len(checkitem):
     # in tọa độ của tâm
     text = f"({int(list_bb[0])}, {int(list_bb[1])})"
     cv2.putText(image, text, (int(list_bb[0])+30,int(list_bb[1])+30), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
-    # cv2.line(image, (int(list[0]),int(list[1])), (int(list[0]) + 50, int(list[1])), (0, 0, 255), 2)  # Vẽ trục X (màu đỏ)
-    # cv2.line(image, (int(list[0]),int(list[1])), (int(list[0]), int(list[1]) + 50), (0, 255, 0), 2)  # Vẽ trục Y (màu xanh lá)
-  count = count + 1
-# print("list masks: ",mylistmask.tolist()[0])
+  count+=1
 
 
-
-# ///////////////////Cách lấy tâm từ các điểm masks/////////////
-# count = 0
-# while count < len(mylistmask):
-#   if checkitem[count] == 4.0:
-#     print("count: ", count)
-#     print(mylistmask[count].tolist())
-#     listitem = mylistmask[count].tolist()
-#     count2 = 0
-#     totalx= 0
-#     totaly = 0
-#     x = 0
-#     y = 0
-    
-#     while count2 < len(listitem):
-#       print(listitem[count2])
-#       coodinate = listitem[count2]
-#       totalx = totalx + coodinate[0]
-#       totaly = totaly + coodinate[1]
-#       # cv2.circle(image, (int(coodinate[0]),int(coodinate[1])), 3, color, thickness)
-#       cv2.drawMarker(image, (int(coodinate[0]),int(coodinate[1])), color, markerType=cv2.MARKER_STAR, markerSize=2)
-#       count2 = count2 + 1
-#     x = totalx / len(listitem)
-#     y = totaly / len(listitem)
-#     cv2.drawMarker(image, (int(x),int(y)), color, markerType=cv2.MARKER_STAR, markerSize=2)
-#   count = count + 1
-
-
-cv2.imwrite('output_image2.jpg', image)
-cv2.imwrite('output_image3.jpg', result)
+# cv2.imwrite('output_image2.jpg', result)
+cv2.imwrite('output_image_Finish.jpg', image)
 
 
 #Kết luận rằng lấy tâm của bounding box của lỗ tâm chuẩn hơn cách lấy tâm từ các điểm masks của lỗ tâm 
