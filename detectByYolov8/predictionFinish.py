@@ -8,7 +8,7 @@ from math import atan2, cos, sin, sqrt, pi
 import matplotlib.pyplot as plt
 import matplotlib.colors as mcolors
 
-link = r'E:\My_Code\NhanDienvat\detectByYolov8\dataset_specialItems\train\images\20230922_155311_jpg.rf.d9e71c3fb09e56d9448ac554eb0694b0.jpg'
+link = r'E:\My_Code\NhanDienvat\detectByYolov8\dataset_specialItems\train\images\20230922_155358_jpg.rf.1aba5a0a66c2b6f2194a1af722b00df7.jpg'
 
 image = cv2.imread(link)
 
@@ -73,16 +73,18 @@ model = YOLO(r'E:\My_Code\NhanDienvat\runs\segment\train\weights\best.pt')  # lo
 results = model(link, save = True)  # predict on an image
 
 
+print("àdd: ", np.array(results[0].boxes.conf, dtype="float").round(2))
+
 myList = []
 
 mylistmask = []
 
 checkitem = []
 for r in results:
+    # print("àdd: ",r.masks.xy)
     myList = r.boxes.xywh.tolist()
     checkitem = r.boxes.cls.tolist()
-
-
+    print("lít: ",checkitem)
 
 count = 0
 
@@ -91,6 +93,8 @@ while count < len(checkitem):
   if(checkitem[count] == 3.0):
     print("3")
     bBoxitem = myList[count]
+    #tạo một mảng numpy mới có cùng kích thước và kiểu dữ liệu như một mảng có tên là image, nhưng tất
+    # cả các giá trị pixel của mảng mới sẽ được đặt thành 0.
     mask = np.zeros_like(image, dtype=np.uint8)
 #     # Định nghĩa màu xanh mà bạn muốn sử dụng (ví dụ: màu xanh lá cây)
 #     green_color = ( 255,255, 0)  # Xanh lá cây: (B, G, R)
@@ -106,11 +110,10 @@ while count < len(checkitem):
     points = np.array([a, b,c ,d], dtype=np.int32)
     cv2.fillPoly(mask, [points], (255, 255, 255))
     src = cv2.bitwise_and(image, mask)
-    beta = -50  # Giảm độ sáng
+    # cv2.imwrite("abc.jpg",src)
+    beta = -60  # Giảm độ sáng
         # Sử dụng hàm cv2.convertScaleAbs để giảm độ sáng của ảnh
     result = cv2.convertScaleAbs(src, alpha=1, beta=beta)
-
-
     # Check if image is loaded successfully
     if result is None:
     #  print('Could not open or find the image: ', args.input)
@@ -122,14 +125,14 @@ while count < len(checkitem):
     gray_inverted = cv2.bitwise_not(gray_picture)
     # Convert image to binary
     _, bw = cv2.threshold(gray_picture, 50, 255, cv2.THRESH_BINARY | cv2.THRESH_OTSU)
-    # cv2.imwrite('bibi.jpg', bw)
+    cv2.imwrite('bibi.jpg', bw)
     
     contours, _ = cv2.findContours(bw, cv2.RETR_LIST, cv2.CHAIN_APPROX_NONE)
     for i, c in enumerate(contours):
     # Calculate the area of each contour
       area = cv2.contourArea(c)
     # Ignore contours that are too small or too large
-      if area < 1e2*3 or 1e5 < area:
+      if area < 1e2*4 or 1e5 < area:
         continue
     # Draw each contour only for visualisation purposes
       cv2.drawContours(image, contours, i, (0, 0, 255), 2)
