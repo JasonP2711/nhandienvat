@@ -623,3 +623,115 @@ sau đó thu được tâm của đường tròn. Đồng thời, ta cũng thự
 toán tâm của contour và kết hợp tính trung bình với tâm của đường tròn 
 thu được lúc trước để trả về giá trị tọa độ pixel của tâm vật hàng tốt 
 nhất
+///////////////////////////////////
+ Tìm góc tối ưu
+ Sử dụng Template Matching cho việc tinh chỉnh lại góc của con 
+hàng
+Tiến hành tạo Template trước:
+
+Sau khi có được template trên, ta sẽ tiến hành xoay template một giá trị
+bằng α + góc đề xuất (α sẽ nằm trong khoảng từ -50 đến 50, giá trị này có thể thay đổi tùy thuộc vào việc mô hình Segmentation có cần phải 
+được tối ưu nhiều hay không).
+
+Sau đó ta sẽ tiến hành matching template đã được xoay ở trên với một 
+vùng roi đã được chuyển sang dạng binary, và ta lựa chọn có giá trị góc 
+tối ưu hơn dựa trên độ tương đồng giữa template và RoI
+
+ Tối ưu thuật toán
+Ý tưởng triển khai:
+- Hạn chế của thuật toán hiện tại là sự lặp lại việc tính toán mặc dù 
+có thể góc đề xuất đã là góc tối ưu
+- Giả định rằng, nếu góc đề xuất có thể được tinh chỉnh và cho kết 
+quả tốt hơn, tức là giá trị tương đồng giữa Template và RoI sẽ cao 
+hơn. Điều đó đồng nghĩa với việc, nếu chúng ta kiểm tra xem liệu 
+với góc tinh chỉnh đầu tiên giá trị tương đồng (Similarity score) 
+trả về có cao hơn so với độ tương đồng khi tính với góc đề xuất từ
+Segmentation, thì ta sẽ cho phép việc tinh chỉnh tiếp tục xảy ra.
+- Tuy nhiên, nếu khi đến 1 độ tinh chỉnh nào đó, giá trị similarity trả
+về thấp hơn so với giá trị similarity của góc tinh chỉnh trước đó. 
+Việc tinh chỉnh sẽ bị dừng ngay lập tức.
+- Để cân bằng việc sai lệch theo chiều âm hoặc dương, ta sẽ thực 
+hiện tính toán cùng lúc độ tinh chỉnh theo chiều dương và độ tinh 
+chỉnh theo chiều âm. Vòng lặp sẽ kết thúc khi cả 2 bên tinh chỉnh 
+âm và dương đều không thể tinh chỉnh được góc đề xuất sang góc 
+tối ưu được nữa
+ Sau đó ta sẽ thực hiện so sánh các kết quả cuối cùng của cả 2 bên 
+so với similarity score của góc đề xuất từ Segmentation để chọn 
+ra góc tối ưu nhất cho vật thể.
+
+Lựa chọn thứ tự gắp con hàng
+ Tổng quát
+Đây là bước được thực hiện sau khi đã qua thuật toán xử lí ảnh và đã cho 
+ra được tọa độ các vật hàng nhận diện được.
+Ở bước này, ta sẽ thực hiện xác định mức độ khả thi có thể gắp được của 
+vật hàng, đây là bước được dùng để tối ưu hiệu suất và giảm thiểu mức độ
+rủi ro khi gắp hàng.
+ Vấn đề và giải pháp
+Vấn đề: 
+- Trong phạm vi của đồ án, các vật hàng sẽ ở vị trí ngẫu nhiên và không 
+biết trước được vị trí cụ thể. Ngoại trừ các trường hợp các vật hàng 
+chồng chéo nhau, nằm nghiêng theo chiều đứng hoặc ngang và nằm úp 
+sẽ bị loại bỏ và không thực hiện gắp, còn lại tất cả các con hàng nằm 
+ngửa dù là gần nhau đến dính vào nhau thì vẫn sẽ được gắp để đảm 
+bảo số lượng tính theo phút.
+- Từ đó sẽ phát sinh ra vấn đề là khi Robot thực hiện gắp vật, có khả
+năng sẽ gây tác động nhẹ đến vật hàng đang gắp. Nếu vật hàng đó nằm 
+độc lập không gần các vật hàng khác, điều này sẽ không phải đáng lo 
+ngại. Nhưng nếu vật hàng đang gắp có các vật hàng khác gần đó thậm 
+chí là dính vào, việc tác động như vậy có khả năng làm dịch chuyển vị
+trí của các vật hàng bên cạnh.
+- Trong khi đó, ứng với mỗi lần nhận diện các vật hàng, thì Robot sẽ
+nhận toàn bộ các tọa độ của vật hàng có thể gắp được. Việc làm thay 
+đổi đi tọa độ của vật hàng bên cạnh sẽ tác động không hề nhỏ đến khả
+năng gắp vật sau này của Robot.
+- Chính vì thế mà một độ đo mức độ khả thi được áp dụng để xác định 
+liệu vật hàng đó có bao nhiêu phần trăm là khả thi để gắp được mà ít 
+gây ảnh hưởng đến các vật hàng xung quanh.
+Ý tưởng:
+- Chúng ta sẽ tận dụng 2 thuật toán xử lí ảnh là Contrast stretch và 
+thresholding để thực hiện lấy ảnh binary của cả Template và RoI.
+Tuy nhiên, đối với bước này, ta sẽ không cắt RoI bằng với Bounding 
+Box từ YOLO mà sẽ nới rộng RoI ra lớn hơn (Padding 100 pixel chỗ
+mỗi phía của RoI) nhằm mục đích có thể bao trọn các khu vực xung 
+quanh của vật hàng hơn.
+- Sau đó ta thực hiện tính tổng số pixel mà mỗi pixel được coi là thuộc 
+vật hàng, trong trường hợp cụ thể như hiện tại, pixel nào có giá trị bằng 
+0 thì được xem như thuộc vật hàng. Ta sẽ tính tổng số lượng pixel đó 
+lại và xem nó như giá trị đại diện về độ đậm đặc của Template hay RoI 
+(gọi là Intensity).
+- Như trên hình 3.27, đối với các con hàng bị bao quanh bởi các con 
+hàng khác, thì vùng pixel bằng 0 sẽ nhiều hơn so với Template
+- Tiếp theo ta thực hiện tính toán mức độ khả thi có thể gắp được theo 
+công thức:
+𝑃 =
+σ(𝑇)
+σ(𝑅𝑜𝐼)
+∗ 100
+ Trong đó:
+ P là giá trị mức độ khả thi có thể gắp được
+ 𝜎(𝑇) là Intensity của Template
+ 𝜎(𝑅𝑜𝐼) là Intensity của RoI
+- Bằng cách này, khi RoI có chứa các vật hàng kế bên, thì sẽ có các pixel 
+thuộc vật hàng đó nằm trong RoI, điều này sẽ dẫn đến Intensity của 
+RoI sẽ được tăng lên cao hơn và P sẽ giảm xuống.
+- Sau đó ta thực hiện sắp xếp lại theo mức độ giảm dần giá trị P tương 
+ứng với mức độ ưu tiên tăng dần và với các con hàng có giá trị P thấp 
+hơn ngưỡng quy định sẽ được bỏ qua và không gắp để tránh trường 
+hợp vật đó bị xê dịch đi quá nhiều bởi những con hàng khác lúc gắp
+- Tuy nhiên, độ đo này nó không hoàn toàn thật sự tìm được vật hàng 
+nào ưu tiên nhất, vì cơ bản từ bước tính Intensity thì nó đã phụ thuộc 
+rất nhiều vào chất lượng của đầu ra thuật toán xử lí ảnh, giả sử trong 
+trường hợp đầu ra nó bị nhiễu bởi Background, thì Intensity nó không 
+hoàn toàn đại diện được cho ảnh. Ngoài ra, vật hàng trong RoI cũng 
+chưa hoàn toàn sẽ giống với Template vì sẽ bị khác góc chụp nếu nằm 
+xa tâm Camera.
+- Chính vì thế mà độ đo này chỉ thật sự được sử dụng để giảm bớt khả
+năng Robot sẽ tác động vào những vật hàng dính với nhau làm sai lệch 
+đi tọa độ thực tế
+ Các số được đánh dấu cho từng vật hàng nằm ngửa thu được đại diện 
+cho thứ tự mà Robot sẽ gắp, có thể thấy vật hàng số 7, 8, 9, 10 là các 
+vật hàng được gắp sau cùng vì có hiện tượng dính với nhau.
+- Đối với độ đo này, ta chỉ thật sự quan tâm đến các vật hàng dính vào 
+nhau, còn những vật hàng rời rạc chúng ta sẽ không quan tâm việc nó 
+có bị xê dịch trong quá trình gắp hay không.
+
