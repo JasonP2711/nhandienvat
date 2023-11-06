@@ -41,6 +41,7 @@ def proposal_box_yolo(img, model, conf_score, img_size):
     
     bboxes, class_ids, masks, scores = ys.predict(img, conf_score, img_size)
     obj, _ = ys.filter_boxes(bboxes, class_ids, masks, scores)
+    print("obj1: ", obj[0])
     angles_pred = ys.compute_angle(obj[1])
     new_bboxes = ys.convert_boxes(obj[0])
     
