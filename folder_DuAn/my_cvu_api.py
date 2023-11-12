@@ -166,7 +166,6 @@ def pattern_matching():
                     ''')
 
         img_gray = cv2.cvtColor(bgr_img, cv2.COLOR_BGR2GRAY)
-        
         copy_of_img_gray = deepcopy(img_gray)
 
         s = time()

@@ -9,9 +9,9 @@ class YOLOSegmentation:
         self.model =YOLO(r'E:\My_Code\NhanDienvat\runs\segment\train\weights\last.pt')  # load a custom model
 
 
-    def predict(self,img,img_size):
+    def predict(self,img,img_size,configScore):
         #Thực hiện nhận diện
-        pred_img = self.model(img, save=True, conf=0.5)
+        pred_img = self.model(img, save=True, conf=configScore, imgsz =img_size)
         #lấy danh sách các bounding box
         bboxes = np.array(pred_img[0].boxes.xyxy, dtype="int")
         # lấy danh sách mặt nạ masks của mỗi đối tượng đcược nhận diện
@@ -51,9 +51,9 @@ class YOLOSegmentation:
         return boxes
         
 
-def proposal_box_yolo(img,model,image_size):
+def proposal_box_yolo(img,model,image_size,configScore):
     ys = YOLOSegmentation(model)
-    bboxes,masks,class_ids, score = ys.predict(img,image_size)
+    bboxes,masks,class_ids, score = ys.predict(img,image_size, configScore)
     obj,_ = ys.filter_boxes(bboxes,masks,class_ids,score)
     # tính toán góc xoay dựa vào các điểm masks(obj[1] là list các điểm masks đúng)
     angle_test = ys.create_angle(obj[1])
