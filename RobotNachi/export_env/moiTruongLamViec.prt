@@ -1,0 +1,1152 @@
+<BODY>
+Box0
+<TYPE>
+323
+</TYPE>
+<POSE>
+-100.000000 400.000000 400.000000 0.000000 0.000000 0.000000
+</POSE>
+<COLOR>
+-1
+</COLOR>
+<BodyRGB>
+1.00 1.00 0.00
+</BodyRGB>
+<TRANSPARENCY>
+1.000000
+</TRANSPARENCY>
+<NOSHOW>
+0
+</NOSHOW>
+<OffsetAtrac>
+0.000000 0.000000 0.000000
+</OffsetAtrac>
+<PART>
+P1
+<COLOR>
+0
+</COLOR>
+<3DFACE>
+<FTYPE>
+FP1
+</FTYPE>
+<COLOR>
+-1
+</COLOR>
+<RGB>
+0.00 1.00 1.00
+</RGB>
+<SHAPEID>
+0
+</SHAPEID>
+<VERTEX>
+4
+    150.00    -150.00       0.00
+    150.00     150.00       0.00
+    150.00     150.00     100.00
+    150.00    -150.00     100.00
+</VERTEX>
+</3DFACE>
+<3DFACE>
+<FTYPE>
+FP2
+</FTYPE>
+<COLOR>
+-1
+</COLOR>
+<RGB>
+0.00 1.00 1.00
+</RGB>
+<SHAPEID>
+0
+</SHAPEID>
+<VERTEX>
+4
+    150.00     150.00       0.00
+   -150.00     150.00       0.00
+   -150.00     150.00     100.00
+    150.00     150.00     100.00
+</VERTEX>
+</3DFACE>
+<3DFACE>
+<FTYPE>
+FP3
+</FTYPE>
+<COLOR>
+-1
+</COLOR>
+<RGB>
+0.00 1.00 1.00
+</RGB>
+<SHAPEID>
+0
+</SHAPEID>
+<VERTEX>
+4
+   -150.00     150.00       0.00
+   -150.00    -150.00       0.00
+   -150.00    -150.00     100.00
+   -150.00     150.00     100.00
+</VERTEX>
+</3DFACE>
+<3DFACE>
+<FTYPE>
+FP4
+</FTYPE>
+<COLOR>
+-1
+</COLOR>
+<RGB>
+0.00 1.00 1.00
+</RGB>
+<SHAPEID>
+0
+</SHAPEID>
+<VERTEX>
+4
+   -150.00    -150.00       0.00
+    150.00    -150.00       0.00
+    150.00    -150.00     100.00
+   -150.00    -150.00     100.00
+</VERTEX>
+</3DFACE>
+<3DFACE>
+<FTYPE>
+FP5
+</FTYPE>
+<COLOR>
+-1
+</COLOR>
+<RGB>
+0.00 1.00 1.00
+</RGB>
+<SHAPEID>
+0
+</SHAPEID>
+<VERTEX>
+4
+   -150.00    -150.00       0.00
+   -150.00     150.00       0.00
+    150.00     150.00       0.00
+    150.00    -150.00       0.00
+</VERTEX>
+</3DFACE>
+<3DFACE>
+<FTYPE>
+FP6
+</FTYPE>
+<COLOR>
+-1
+</COLOR>
+<RGB>
+0.00 1.00 1.00
+</RGB>
+<SHAPEID>
+0
+</SHAPEID>
+<VERTEX>
+4
+    150.00    -150.00     100.00
+    150.00     150.00     100.00
+   -150.00     150.00     100.00
+   -150.00    -150.00     100.00
+</VERTEX>
+</3DFACE>
+<3DFACE>
+<FTYPE>
+E01
+</FTYPE>
+<COLOR>
+-1
+</COLOR>
+<RGB>
+0.00 1.00 1.00
+</RGB>
+<SHAPEID>
+0
+</SHAPEID>
+<VERTEX>
+2
+    150.00    -150.00       0.00
+    150.00     150.00       0.00
+</VERTEX>
+</3DFACE>
+<3DFACE>
+<FTYPE>
+E12
+</FTYPE>
+<COLOR>
+-1
+</COLOR>
+<RGB>
+0.00 1.00 1.00
+</RGB>
+<SHAPEID>
+0
+</SHAPEID>
+<VERTEX>
+2
+    150.00     150.00       0.00
+   -150.00     150.00       0.00
+</VERTEX>
+</3DFACE>
+<3DFACE>
+<FTYPE>
+E23
+</FTYPE>
+<COLOR>
+-1
+</COLOR>
+<RGB>
+0.00 1.00 1.00
+</RGB>
+<SHAPEID>
+0
+</SHAPEID>
+<VERTEX>
+2
+   -150.00     150.00       0.00
+   -150.00    -150.00       0.00
+</VERTEX>
+</3DFACE>
+<3DFACE>
+<FTYPE>
+E30
+</FTYPE>
+<COLOR>
+-1
+</COLOR>
+<RGB>
+0.00 1.00 1.00
+</RGB>
+<SHAPEID>
+0
+</SHAPEID>
+<VERTEX>
+2
+   -150.00    -150.00       0.00
+    150.00    -150.00       0.00
+</VERTEX>
+</3DFACE>
+<3DFACE>
+<FTYPE>
+E45
+</FTYPE>
+<COLOR>
+-1
+</COLOR>
+<RGB>
+0.00 1.00 1.00
+</RGB>
+<SHAPEID>
+0
+</SHAPEID>
+<VERTEX>
+2
+    150.00    -150.00     100.00
+    150.00     150.00     100.00
+</VERTEX>
+</3DFACE>
+<3DFACE>
+<FTYPE>
+E56
+</FTYPE>
+<COLOR>
+-1
+</COLOR>
+<RGB>
+0.00 1.00 1.00
+</RGB>
+<SHAPEID>
+0
+</SHAPEID>
+<VERTEX>
+2
+    150.00     150.00     100.00
+   -150.00     150.00     100.00
+</VERTEX>
+</3DFACE>
+<3DFACE>
+<FTYPE>
+E67
+</FTYPE>
+<COLOR>
+-1
+</COLOR>
+<RGB>
+0.00 1.00 1.00
+</RGB>
+<SHAPEID>
+0
+</SHAPEID>
+<VERTEX>
+2
+   -150.00     150.00     100.00
+   -150.00    -150.00     100.00
+</VERTEX>
+</3DFACE>
+<3DFACE>
+<FTYPE>
+E74
+</FTYPE>
+<COLOR>
+-1
+</COLOR>
+<RGB>
+0.00 1.00 1.00
+</RGB>
+<SHAPEID>
+0
+</SHAPEID>
+<VERTEX>
+2
+   -150.00    -150.00     100.00
+    150.00    -150.00     100.00
+</VERTEX>
+</3DFACE>
+<3DFACE>
+<FTYPE>
+E04
+</FTYPE>
+<COLOR>
+-1
+</COLOR>
+<RGB>
+0.00 1.00 1.00
+</RGB>
+<SHAPEID>
+0
+</SHAPEID>
+<VERTEX>
+2
+    150.00    -150.00       0.00
+    150.00    -150.00     100.00
+</VERTEX>
+</3DFACE>
+<3DFACE>
+<FTYPE>
+E15
+</FTYPE>
+<COLOR>
+-1
+</COLOR>
+<RGB>
+0.00 1.00 1.00
+</RGB>
+<SHAPEID>
+0
+</SHAPEID>
+<VERTEX>
+2
+    150.00     150.00       0.00
+    150.00     150.00     100.00
+</VERTEX>
+</3DFACE>
+<3DFACE>
+<FTYPE>
+E26
+</FTYPE>
+<COLOR>
+-1
+</COLOR>
+<RGB>
+0.00 1.00 1.00
+</RGB>
+<SHAPEID>
+0
+</SHAPEID>
+<VERTEX>
+2
+   -150.00     150.00       0.00
+   -150.00     150.00     100.00
+</VERTEX>
+</3DFACE>
+<3DFACE>
+<FTYPE>
+E37
+</FTYPE>
+<COLOR>
+-1
+</COLOR>
+<RGB>
+0.00 1.00 1.00
+</RGB>
+<SHAPEID>
+0
+</SHAPEID>
+<VERTEX>
+2
+   -150.00    -150.00       0.00
+   -150.00    -150.00     100.00
+</VERTEX>
+</3DFACE>
+</PART>
+</BODY>
+<BODY>
+conveyor
+<TYPE>
+323
+</TYPE>
+<POSE>
+-700.000000 400.000000 0.000000 0.000000 0.000000 0.000000
+</POSE>
+<COLOR>
+-1
+</COLOR>
+<BodyRGB>
+0.00 1.00 1.00
+</BodyRGB>
+<TRANSPARENCY>
+1.000000
+</TRANSPARENCY>
+<NOSHOW>
+0
+</NOSHOW>
+<OffsetAtrac>
+0.000000 0.000000 0.000000
+</OffsetAtrac>
+<PART>
+P1
+<COLOR>
+0
+</COLOR>
+<3DFACE>
+<FTYPE>
+FP1
+</FTYPE>
+<COLOR>
+-1
+</COLOR>
+<RGB>
+0.00 1.00 1.00
+</RGB>
+<SHAPEID>
+0
+</SHAPEID>
+<VERTEX>
+4
+   1000.00    -175.00       0.00
+   1000.00     175.00       0.00
+   1000.00     175.00     400.00
+   1000.00    -175.00     400.00
+</VERTEX>
+</3DFACE>
+<3DFACE>
+<FTYPE>
+FP2
+</FTYPE>
+<COLOR>
+-1
+</COLOR>
+<RGB>
+0.00 1.00 1.00
+</RGB>
+<SHAPEID>
+0
+</SHAPEID>
+<VERTEX>
+4
+   1000.00     175.00       0.00
+  -1000.00     175.00       0.00
+  -1000.00     175.00     400.00
+   1000.00     175.00     400.00
+</VERTEX>
+</3DFACE>
+<3DFACE>
+<FTYPE>
+FP3
+</FTYPE>
+<COLOR>
+-1
+</COLOR>
+<RGB>
+0.00 1.00 1.00
+</RGB>
+<SHAPEID>
+0
+</SHAPEID>
+<VERTEX>
+4
+  -1000.00     175.00       0.00
+  -1000.00    -175.00       0.00
+  -1000.00    -175.00     400.00
+  -1000.00     175.00     400.00
+</VERTEX>
+</3DFACE>
+<3DFACE>
+<FTYPE>
+FP4
+</FTYPE>
+<COLOR>
+-1
+</COLOR>
+<RGB>
+0.00 1.00 1.00
+</RGB>
+<SHAPEID>
+0
+</SHAPEID>
+<VERTEX>
+4
+  -1000.00    -175.00       0.00
+   1000.00    -175.00       0.00
+   1000.00    -175.00     400.00
+  -1000.00    -175.00     400.00
+</VERTEX>
+</3DFACE>
+<3DFACE>
+<FTYPE>
+FP5
+</FTYPE>
+<COLOR>
+-1
+</COLOR>
+<RGB>
+0.00 1.00 1.00
+</RGB>
+<SHAPEID>
+0
+</SHAPEID>
+<VERTEX>
+4
+  -1000.00    -175.00       0.00
+  -1000.00     175.00       0.00
+   1000.00     175.00       0.00
+   1000.00    -175.00       0.00
+</VERTEX>
+</3DFACE>
+<3DFACE>
+<FTYPE>
+FP6
+</FTYPE>
+<COLOR>
+-1
+</COLOR>
+<RGB>
+0.00 1.00 1.00
+</RGB>
+<SHAPEID>
+0
+</SHAPEID>
+<VERTEX>
+4
+   1000.00    -175.00     400.00
+   1000.00     175.00     400.00
+  -1000.00     175.00     400.00
+  -1000.00    -175.00     400.00
+</VERTEX>
+</3DFACE>
+<3DFACE>
+<FTYPE>
+E01
+</FTYPE>
+<COLOR>
+-1
+</COLOR>
+<RGB>
+0.00 1.00 1.00
+</RGB>
+<SHAPEID>
+0
+</SHAPEID>
+<VERTEX>
+2
+   1000.00    -175.00       0.00
+   1000.00     175.00       0.00
+</VERTEX>
+</3DFACE>
+<3DFACE>
+<FTYPE>
+E12
+</FTYPE>
+<COLOR>
+-1
+</COLOR>
+<RGB>
+0.00 1.00 1.00
+</RGB>
+<SHAPEID>
+0
+</SHAPEID>
+<VERTEX>
+2
+   1000.00     175.00       0.00
+  -1000.00     175.00       0.00
+</VERTEX>
+</3DFACE>
+<3DFACE>
+<FTYPE>
+E23
+</FTYPE>
+<COLOR>
+-1
+</COLOR>
+<RGB>
+0.00 1.00 1.00
+</RGB>
+<SHAPEID>
+0
+</SHAPEID>
+<VERTEX>
+2
+  -1000.00     175.00       0.00
+  -1000.00    -175.00       0.00
+</VERTEX>
+</3DFACE>
+<3DFACE>
+<FTYPE>
+E30
+</FTYPE>
+<COLOR>
+-1
+</COLOR>
+<RGB>
+0.00 1.00 1.00
+</RGB>
+<SHAPEID>
+0
+</SHAPEID>
+<VERTEX>
+2
+  -1000.00    -175.00       0.00
+   1000.00    -175.00       0.00
+</VERTEX>
+</3DFACE>
+<3DFACE>
+<FTYPE>
+E45
+</FTYPE>
+<COLOR>
+-1
+</COLOR>
+<RGB>
+0.00 1.00 1.00
+</RGB>
+<SHAPEID>
+0
+</SHAPEID>
+<VERTEX>
+2
+   1000.00    -175.00     400.00
+   1000.00     175.00     400.00
+</VERTEX>
+</3DFACE>
+<3DFACE>
+<FTYPE>
+E56
+</FTYPE>
+<COLOR>
+-1
+</COLOR>
+<RGB>
+0.00 1.00 1.00
+</RGB>
+<SHAPEID>
+0
+</SHAPEID>
+<VERTEX>
+2
+   1000.00     175.00     400.00
+  -1000.00     175.00     400.00
+</VERTEX>
+</3DFACE>
+<3DFACE>
+<FTYPE>
+E67
+</FTYPE>
+<COLOR>
+-1
+</COLOR>
+<RGB>
+0.00 1.00 1.00
+</RGB>
+<SHAPEID>
+0
+</SHAPEID>
+<VERTEX>
+2
+  -1000.00     175.00     400.00
+  -1000.00    -175.00     400.00
+</VERTEX>
+</3DFACE>
+<3DFACE>
+<FTYPE>
+E74
+</FTYPE>
+<COLOR>
+-1
+</COLOR>
+<RGB>
+0.00 1.00 1.00
+</RGB>
+<SHAPEID>
+0
+</SHAPEID>
+<VERTEX>
+2
+  -1000.00    -175.00     400.00
+   1000.00    -175.00     400.00
+</VERTEX>
+</3DFACE>
+<3DFACE>
+<FTYPE>
+E04
+</FTYPE>
+<COLOR>
+-1
+</COLOR>
+<RGB>
+0.00 1.00 1.00
+</RGB>
+<SHAPEID>
+0
+</SHAPEID>
+<VERTEX>
+2
+   1000.00    -175.00       0.00
+   1000.00    -175.00     400.00
+</VERTEX>
+</3DFACE>
+<3DFACE>
+<FTYPE>
+E15
+</FTYPE>
+<COLOR>
+-1
+</COLOR>
+<RGB>
+0.00 1.00 1.00
+</RGB>
+<SHAPEID>
+0
+</SHAPEID>
+<VERTEX>
+2
+   1000.00     175.00       0.00
+   1000.00     175.00     400.00
+</VERTEX>
+</3DFACE>
+<3DFACE>
+<FTYPE>
+E26
+</FTYPE>
+<COLOR>
+-1
+</COLOR>
+<RGB>
+0.00 1.00 1.00
+</RGB>
+<SHAPEID>
+0
+</SHAPEID>
+<VERTEX>
+2
+  -1000.00     175.00       0.00
+  -1000.00     175.00     400.00
+</VERTEX>
+</3DFACE>
+<3DFACE>
+<FTYPE>
+E37
+</FTYPE>
+<COLOR>
+-1
+</COLOR>
+<RGB>
+0.00 1.00 1.00
+</RGB>
+<SHAPEID>
+0
+</SHAPEID>
+<VERTEX>
+2
+  -1000.00    -175.00       0.00
+  -1000.00    -175.00     400.00
+</VERTEX>
+</3DFACE>
+</PART>
+</BODY>
+<BODY>
+Table
+<TYPE>
+323
+</TYPE>
+<POSE>
+300.000000 -150.000000 0.000000 0.000000 0.000000 0.000000
+</POSE>
+<COLOR>
+-1
+</COLOR>
+<BodyRGB>
+0.00 1.00 1.00
+</BodyRGB>
+<TRANSPARENCY>
+1.000000
+</TRANSPARENCY>
+<NOSHOW>
+0
+</NOSHOW>
+<OffsetAtrac>
+0.000000 0.000000 0.000000
+</OffsetAtrac>
+<PART>
+P1
+<COLOR>
+0
+</COLOR>
+<3DFACE>
+<FTYPE>
+FP1
+</FTYPE>
+<COLOR>
+-1
+</COLOR>
+<RGB>
+0.00 1.00 1.00
+</RGB>
+<SHAPEID>
+0
+</SHAPEID>
+<VERTEX>
+4
+    175.00    -175.00       0.00
+    175.00     175.00       0.00
+    175.00     175.00     400.00
+    175.00    -175.00     400.00
+</VERTEX>
+</3DFACE>
+<3DFACE>
+<FTYPE>
+FP2
+</FTYPE>
+<COLOR>
+-1
+</COLOR>
+<RGB>
+0.00 1.00 1.00
+</RGB>
+<SHAPEID>
+0
+</SHAPEID>
+<VERTEX>
+4
+    175.00     175.00       0.00
+   -175.00     175.00       0.00
+   -175.00     175.00     400.00
+    175.00     175.00     400.00
+</VERTEX>
+</3DFACE>
+<3DFACE>
+<FTYPE>
+FP3
+</FTYPE>
+<COLOR>
+-1
+</COLOR>
+<RGB>
+0.00 1.00 1.00
+</RGB>
+<SHAPEID>
+0
+</SHAPEID>
+<VERTEX>
+4
+   -175.00     175.00       0.00
+   -175.00    -175.00       0.00
+   -175.00    -175.00     400.00
+   -175.00     175.00     400.00
+</VERTEX>
+</3DFACE>
+<3DFACE>
+<FTYPE>
+FP4
+</FTYPE>
+<COLOR>
+-1
+</COLOR>
+<RGB>
+0.00 1.00 1.00
+</RGB>
+<SHAPEID>
+0
+</SHAPEID>
+<VERTEX>
+4
+   -175.00    -175.00       0.00
+    175.00    -175.00       0.00
+    175.00    -175.00     400.00
+   -175.00    -175.00     400.00
+</VERTEX>
+</3DFACE>
+<3DFACE>
+<FTYPE>
+FP5
+</FTYPE>
+<COLOR>
+-1
+</COLOR>
+<RGB>
+0.00 1.00 1.00
+</RGB>
+<SHAPEID>
+0
+</SHAPEID>
+<VERTEX>
+4
+   -175.00    -175.00       0.00
+   -175.00     175.00       0.00
+    175.00     175.00       0.00
+    175.00    -175.00       0.00
+</VERTEX>
+</3DFACE>
+<3DFACE>
+<FTYPE>
+FP6
+</FTYPE>
+<COLOR>
+-1
+</COLOR>
+<RGB>
+0.00 1.00 1.00
+</RGB>
+<SHAPEID>
+0
+</SHAPEID>
+<VERTEX>
+4
+    175.00    -175.00     400.00
+    175.00     175.00     400.00
+   -175.00     175.00     400.00
+   -175.00    -175.00     400.00
+</VERTEX>
+</3DFACE>
+<3DFACE>
+<FTYPE>
+E01
+</FTYPE>
+<COLOR>
+-1
+</COLOR>
+<RGB>
+0.00 1.00 1.00
+</RGB>
+<SHAPEID>
+0
+</SHAPEID>
+<VERTEX>
+2
+    175.00    -175.00       0.00
+    175.00     175.00       0.00
+</VERTEX>
+</3DFACE>
+<3DFACE>
+<FTYPE>
+E12
+</FTYPE>
+<COLOR>
+-1
+</COLOR>
+<RGB>
+0.00 1.00 1.00
+</RGB>
+<SHAPEID>
+0
+</SHAPEID>
+<VERTEX>
+2
+    175.00     175.00       0.00
+   -175.00     175.00       0.00
+</VERTEX>
+</3DFACE>
+<3DFACE>
+<FTYPE>
+E23
+</FTYPE>
+<COLOR>
+-1
+</COLOR>
+<RGB>
+0.00 1.00 1.00
+</RGB>
+<SHAPEID>
+0
+</SHAPEID>
+<VERTEX>
+2
+   -175.00     175.00       0.00
+   -175.00    -175.00       0.00
+</VERTEX>
+</3DFACE>
+<3DFACE>
+<FTYPE>
+E30
+</FTYPE>
+<COLOR>
+-1
+</COLOR>
+<RGB>
+0.00 1.00 1.00
+</RGB>
+<SHAPEID>
+0
+</SHAPEID>
+<VERTEX>
+2
+   -175.00    -175.00       0.00
+    175.00    -175.00       0.00
+</VERTEX>
+</3DFACE>
+<3DFACE>
+<FTYPE>
+E45
+</FTYPE>
+<COLOR>
+-1
+</COLOR>
+<RGB>
+0.00 1.00 1.00
+</RGB>
+<SHAPEID>
+0
+</SHAPEID>
+<VERTEX>
+2
+    175.00    -175.00     400.00
+    175.00     175.00     400.00
+</VERTEX>
+</3DFACE>
+<3DFACE>
+<FTYPE>
+E56
+</FTYPE>
+<COLOR>
+-1
+</COLOR>
+<RGB>
+0.00 1.00 1.00
+</RGB>
+<SHAPEID>
+0
+</SHAPEID>
+<VERTEX>
+2
+    175.00     175.00     400.00
+   -175.00     175.00     400.00
+</VERTEX>
+</3DFACE>
+<3DFACE>
+<FTYPE>
+E67
+</FTYPE>
+<COLOR>
+-1
+</COLOR>
+<RGB>
+0.00 1.00 1.00
+</RGB>
+<SHAPEID>
+0
+</SHAPEID>
+<VERTEX>
+2
+   -175.00     175.00     400.00
+   -175.00    -175.00     400.00
+</VERTEX>
+</3DFACE>
+<3DFACE>
+<FTYPE>
+E74
+</FTYPE>
+<COLOR>
+-1
+</COLOR>
+<RGB>
+0.00 1.00 1.00
+</RGB>
+<SHAPEID>
+0
+</SHAPEID>
+<VERTEX>
+2
+   -175.00    -175.00     400.00
+    175.00    -175.00     400.00
+</VERTEX>
+</3DFACE>
+<3DFACE>
+<FTYPE>
+E04
+</FTYPE>
+<COLOR>
+-1
+</COLOR>
+<RGB>
+0.00 1.00 1.00
+</RGB>
+<SHAPEID>
+0
+</SHAPEID>
+<VERTEX>
+2
+    175.00    -175.00       0.00
+    175.00    -175.00     400.00
+</VERTEX>
+</3DFACE>
+<3DFACE>
+<FTYPE>
+E15
+</FTYPE>
+<COLOR>
+-1
+</COLOR>
+<RGB>
+0.00 1.00 1.00
+</RGB>
+<SHAPEID>
+0
+</SHAPEID>
+<VERTEX>
+2
+    175.00     175.00       0.00
+    175.00     175.00     400.00
+</VERTEX>
+</3DFACE>
+<3DFACE>
+<FTYPE>
+E26
+</FTYPE>
+<COLOR>
+-1
+</COLOR>
+<RGB>
+0.00 1.00 1.00
+</RGB>
+<SHAPEID>
+0
+</SHAPEID>
+<VERTEX>
+2
+   -175.00     175.00       0.00
+   -175.00     175.00     400.00
+</VERTEX>
+</3DFACE>
+<3DFACE>
+<FTYPE>
+E37
+</FTYPE>
+<COLOR>
+-1
+</COLOR>
+<RGB>
+0.00 1.00 1.00
+</RGB>
+<SHAPEID>
+0
+</SHAPEID>
+<VERTEX>
+2
+   -175.00    -175.00       0.00
+   -175.00    -175.00     400.00
+</VERTEX>
+</3DFACE>
+</PART>
+</BODY>
