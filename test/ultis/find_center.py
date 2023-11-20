@@ -136,16 +136,16 @@ def compute_distance(point1, point2):
 
 
 
-def find_center(bbox,img_gray , intensity_of_template_gray):
+def find_center(bbox,img_gray ,low_clip,high_clip, intensity_of_template_gray):
     (x1, y1, w, h) = bbox
     x2, y2 = x1 + w, y1 + h
     center_b_x, center_b_y = (x2-x1)/2, (y2-y1)/2
     
-    roi_gray = img_gray[y1 - 50:y2 + 50, x1 - 50:x2 + 50]
+    padded_roi_gray = img_gray[y1 - 50:y2 + 50, x1 - 50:x2 + 50]
 
-    padded_roi_gray = img_gray[y1:y2, x1:x2]
+    roi_gray = img_gray[y1:y2, x1:x2]
     
-    roi_gray, padded_roi_gray = list(map(lambda x: contrast_stretching(x, {"low_clip": 10, "high_clip": 90}), [roi_gray, padded_roi_gray]))
+    roi_gray, padded_roi_gray = list(map(lambda x: contrast_stretching(x, low_clip,high_clip), [roi_gray, padded_roi_gray]))
     _, roi_gray = cv2.threshold(roi_gray, 100, 255, cv2.THRESH_BINARY_INV)
     _, padded_roi_gray = cv2.threshold(padded_roi_gray, 100, 255, cv2.THRESH_BINARY_INV)
     

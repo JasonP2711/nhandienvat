@@ -27,8 +27,6 @@ def cvu_process():
       templateLink = request.form.get('templateLink')
       modelLink = request.form.get('modelLink')
       pathSaveOutputImg = request.form.get('pathSaveOutputImg')
-      
-      
 
       try:
             csvLink = request.form.get('csvLink')
@@ -44,20 +42,24 @@ def cvu_process():
             logger.error(f'{e}\n')
             return f'{e}\n'
 
-
-
       #/////////Begin process/////////////////
       imgLink = imgLink.replace('\\', '/')
       templateLink = templateLink.replace('\\', '/')
       img = cv2.imread(imgLink)
       template = cv2.imread(templateLink)
+      temp_height, temp_width = template.shape[0], template.shape[1]
+      print("temp_height, temp_width: ",temp_height, temp_width)
       gray_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+
       template_gray = cv2.cvtColor(template, cv2.COLOR_BGR2GRAY)
       copy_of_template_gray = deepcopy(template_gray)
       minus_modify_angle = np.arange(-1, min_modify, -1) #-20
       plus_modify_angle = np.arange(1, max_modify, 1) #20
-      params = {"low_clip": 10, "high_clip": 90}
-      copy_of_template_gray = contrast_stretching(copy_of_template_gray,  params)
+      low_clip=5
+      high_clip=97
+      copy_of_template_gray = contrast_stretching(copy_of_template_gray,  low_clip,high_clip)
+      # copy_of_template_gray = contrast_stretching(copy_of_template_gray)
+      cv2.imwrite("testTemp1.jpg",copy_of_template_gray)
       _, copy_of_template_gray = cv2.threshold(copy_of_template_gray, 100, 255, cv2.THRESH_BINARY_INV)
       cv2.imwrite('intensity_template.jpg', copy_of_template_gray)
       intensity_of_template_gray = np.sum(copy_of_template_gray == 0)
@@ -67,9 +69,10 @@ def cvu_process():
 
       good_points = []
       for angle,bboxes in object_item:
-            center = find_center2(img,bboxes)
-            center_obj,possible_grasp_ratio = find_center(bboxes, gray_img, intensity_of_template_gray)
-            cv2.circle(img,(int(center_obj[0]),int(center_obj[1])),2,(0, 0, 255) ,-1)
+            center_obj,possible_grasp_ratio = find_center2(gray_img,bboxes,low_clip,high_clip, intensity_of_template_gray)
+            cv2.circle(img, (center_obj[0],center_obj[1]), 1, (0,0,255))
+            # center_obj,possible_grasp_ratio = find_center(bboxes, gray_img, intensity_of_template_gray)
+            # cv2.circle(img,(int(center_obj[0]),int(center_obj[1])),2,(0, 0, 255) ,-1)
           
             if possible_grasp_ratio < 50:
                       print("score<50!")
@@ -153,12 +156,12 @@ def cvu_process():
             if point:
                 good_points.append((best_point[2], center_obj, possible_grasp_ratio))
             print("good point: ",good_points)
-      # cv2.drawContours(img, contours, -1, (255, 0, 255), 2)
 
+      
       cv2.imwrite("amTam.jpg",img)
-      # cv2.imwrite("amTam2.jpg",img2)
-      resize(imgLink,pathSaveOutputImg)
-      return f'<div><h1>Result: </h1><p>{good_points}</p></div>'
+ 
+      # resize(imgLink,pathSaveOutputImg)
+      return f'<div><h1>Result: </h1><p>{object_item}</p></div>'
   if request.method == "GET":
        return f'<div><h1>Get result</h1></div>'
        

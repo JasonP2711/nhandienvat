@@ -11,7 +11,7 @@ class YOLOSegmentation:
 
     def predict(self,img,img_size,configScore):
         #Thực hiện nhận diện
-        pred_img = self.model(img, save=True, conf=configScore, imgsz =img_size)
+        pred_img = self.model(img, save=False, conf=configScore, imgsz =img_size)
         #lấy danh sách các bounding box
         bboxes = np.array(pred_img[0].boxes.xyxy, dtype="int")
         # lấy danh sách mặt nạ masks của mỗi đối tượng đcược nhận diện

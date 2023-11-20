@@ -2,17 +2,29 @@ import cv2
 import numpy as np
 import inspect
 
-def with_params(func):
-    def wrapper(img, params):
-        return func(img, **{k: params[k] for k in inspect.signature(func).parameters.keys() if k in params})
-    return wrapper
+# def with_params(func):
+#     def wrapper(img, params):
+#         return func(img, **{k: params[k] for k in inspect.signature(func).parameters.keys() if k in params})
+#     return wrapper
 
-@with_params
-def contrast_stretching(img, low_clip=5.0, high_clip=97.0):
+# @with_params
+def contrast_stretching(img, low_clip, high_clip):
     img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY) if len(img.shape) == 3 else img
     low_val, high_val = np.percentile(img, (low_clip, high_clip))
     out_img = np.uint8(np.clip((img - low_val) * 255.0 / (high_val - low_val), 0, 255))
     return out_img
+
+#Min - Max stretching
+# def contrast_stretching(image):
+#     image_cs = np.zeros((image.shape[0],image.shape[1]),dtype = 'uint8')
+#     min = np.min(image)
+#     max = np.max(image)
+#     for i in range(image.shape[0]):
+#       for j in range(image.shape[1]):
+#         image_cs[i,j] = 255*(image[i,j] - min)/(max - min)
+
+#     return image_cs
+     
 
 
 
