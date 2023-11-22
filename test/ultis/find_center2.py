@@ -15,8 +15,6 @@ def find_center2(gray_img,bboxes, low_clip,high_clip,intensity_of_template_gray)
 
     contours,_ = cv2.findContours(thresholdImg,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
     largest_contour = max(contours, key=len)
-    cv2.imwrite("abg.jpg",thresholdImg)
-    # print(contours)
 
     s = cv2.contourArea(largest_contour)
     if s > 4000:
