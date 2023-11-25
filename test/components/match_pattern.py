@@ -4,70 +4,34 @@ from ultis.rotate_object import rotate_object
 import logging
 
 logger = logging.getLogger(__name__)
+# mở rộng khung ảnh một khi tọa độ bbox ở sát khung ảnh, cản trở việc roi đối tượng
+def padded_image(img_gray, bboxes, esilon_w,epsilon_h):
+   x_start = bboxes[0] - esilon_w
+   y_start = bboxes[1] - epsilon_h
+   x_end = bboxes[0] + bboxes[2] + esilon_w
+   y_end = bboxes[1] + bboxes[3] + epsilon_h
+   padded_left = np.min(x_start,0)
+   padded_top = np.min(y_start,0)
+   padded_right = np.min(img_gray.shape[1] - x_end, 0)
+   padded_bottom = np.min(img_gray.shape[0] - y_end,0)
 
-#cắt ảnh từ img_gray rồi xoay template, nếu template đã xoay có số score tương đồng cao nhất thì đó là góc chuẩn
-def match_template(roi, template_gray,method,angle,scale,threshold):
-   if len(roi.shape) == 3:
-        img_gray = cv2.cvtColor(roi, cv2.COLOR_BGR2GRAY)
-   else:
-        img_gray = roi
-        
-   if len(template_gray.shape) == 3:
-        template = cv2.cvtColor(template_gray, cv2.COLOR_BGR2GRAY)
-   else:
-        template = template_gray
-   h,w = template.shape
-#    if angle==0:
-#       mask = np.full((w,h,1),255,dtype=np.uint8)
-#       rotated_template = template_gray
-#       new_w, new_h = w, h
-#    else:
-   rotated_template, mask, new_w, new_h = rotate_object(template_gray, angle)
-   method = eval(method)
-   # print("masks1: ",mask)
-   # print("masks2: ",rotated_template)
+   img_padded = cv2.copyMakeBorder(img_gray,np.abs(padded_top),np.abs(padded_bottom), np.abs(padded_left), np.abs(padded_right),cv2.BORDER_CONSTANT, value=0 )
+   return img_padded, x_start, x_end, y_start, y_end, padded_top, padded_left, padded_bottom, padded_right
 
-   if (img_gray.shape[0] < rotated_template.shape[0]) or (img_gray.shape[1] < rotated_template.shape[1]):
-        logger.warning(f'img_gray shape: {img_gray.shape}, rotated_template shape: {rotated_template.shape}')
-        return
-   matched_points = cv2.matchTemplate(img_gray, rotated_template, method, None, mask)
-   _, max_val, _, max_loc = cv2.minMaxLoc(matched_points)
-
-   if max_val >= threshold and max_val <= 1.0:
-     return [*max_loc, angle, scale, max_val, new_w, new_h]
-   #   return max_val
-      
-
-def process_roi(img_padded, template_gray, method, sub_angle, threshold,
-                        top, left, bottom, right, 
-                        x_start, x_end, y_start, y_end):
-   roi = img_padded[y_start + abs(top): y_end + abs(top) + abs(bottom),x_start + abs(left):x_end + abs(left) + abs(right)]
-   cv2.imwrite("lkjl.jpg",roi)
-   point = match_template(roi, template_gray,method,sub_angle,100,threshold)
-#    print("point: ",point)
-   return point
-
-def padded_image(img_gray, bbox, epsilon_w, epsilon_h):
-   x_start,x_end = (bbox[0]-epsilon_w, bbox[0]+bbox[2]+epsilon_w)
-   y_start, y_end = (bbox[1]-epsilon_h,bbox[1]+bbox[3]+epsilon_h)
-   top = min(y_start, 0)
-   left = min(x_start, 0)
-   bottom = min(img_gray.shape[0] - y_end, 0)
-   right = min(img_gray.shape[1] - x_end, 0)
-#    nới rộng ảnh ra
-   img_padded = cv2.copyMakeBorder(img_gray, abs(top), abs(bottom), abs(left), abs(right), cv2.BORDER_CONSTANT, value=0)
-   return img_padded, x_start, x_end, y_start, y_end, top, left, bottom, right
+def template_matching(img_gray, template_gray, boxes):
+   img_roi = img_gray[boxes[1]: boxes[1] + boxes[3], boxes[0]: boxes[0] + boxes[2]]
+   cv2.imwrite( "img_roi.jpg",img_roi)
+   #cần mở vòng ảnh to hơn để thuận tiện trong việc matching
 
 def match_pattern(img_gray, template_gray, boxes, sub_angle, method, threshold ):
    _,_, w_temp,h_temp = rotate_object(template_gray,sub_angle)
    epsilon_w, epsilon_h = np.abs((boxes[2]-w_temp, boxes[3]-h_temp))
    img_padded, x_start, x_end, y_start, y_end, top, left, bottom, right = padded_image(img_gray,boxes, epsilon_w, epsilon_h)
    
-   point = process_roi(img_padded, template_gray, method, sub_angle, threshold,
-                        top, left, bottom, right, 
-                        x_start, x_end, y_start, y_end)
-   print("point mark: ", point)
-   return point
+   template_matching(img_gray, template_gray, boxes )
+
+   # print("point mark: ", point)
+   # return point
 
 
 
