@@ -4,8 +4,8 @@ import socket
 server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 # Liên kết socket với địa chỉ và cổng
-host = '192.168.1.9'
-port = 4000
+host = '127.0.0.1'
+port = 48951
 server_socket.bind((host, port))
 
 # Lắng nghe kết nối từ client

@@ -1,6 +1,6 @@
 import cv2
 import numpy as np
-from ultis.rotate_template import rotate_template 
+from ultis.rotate_object import rotate_object 
 import logging
 
 logger = logging.getLogger(__name__)
@@ -22,7 +22,7 @@ def match_template(roi, template_gray,method,angle,scale,threshold):
 #       rotated_template = template_gray
 #       new_w, new_h = w, h
 #    else:
-   rotated_template, mask, new_w, new_h = rotate_template(template_gray, angle)
+   rotated_template, mask, new_w, new_h = rotate_object(template_gray, angle)
    method = eval(method)
    # print("masks1: ",mask)
    # print("masks2: ",rotated_template)
@@ -59,7 +59,7 @@ def padded_image(img_gray, bbox, epsilon_w, epsilon_h):
    return img_padded, x_start, x_end, y_start, y_end, top, left, bottom, right
 
 def match_pattern(img_gray, template_gray, boxes, sub_angle, method, threshold ):
-   _,_, w_temp,h_temp = rotate_template(template_gray,sub_angle)
+   _,_, w_temp,h_temp = rotate_object(template_gray,sub_angle)
    epsilon_w, epsilon_h = np.abs((boxes[2]-w_temp, boxes[3]-h_temp))
    img_padded, x_start, x_end, y_start, y_end, top, left, bottom, right = padded_image(img_gray,boxes, epsilon_w, epsilon_h)
    

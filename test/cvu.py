@@ -86,8 +86,9 @@ def cvu_process():
             sub_plus_points = []
           
             threshold = 0.95
-            # point = match_pattern(gray_img, template_gray, bboxes, angle, method, threshold)
-            point = match_pattern2(template_gray, gray_img, bboxes, angle, method, threshold)
+            point = match_pattern(gray_img, template_gray, bboxes, angle, method, threshold)
+            # point = match_pattern2(template_gray, gray_img, bboxes, angle, method, threshold)
+            # rotate_object(copy_of_template_gray,angle)
 
       #       print("zzz: ",point)
       #       cv2.putText(img, (f"({int(center_obj[0])},{int(center_obj[1])})"),(int(center_obj[0])+10,int(center_obj[1]+10)) , cv2.FONT_HERSHEY_SIMPLEX,0.4,(255, 255, 255), 2)
