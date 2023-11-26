@@ -16,19 +16,21 @@ def padded_image(img_gray, bboxes, esilon_w,epsilon_h):
    padded_bottom = np.min(img_gray.shape[0] - y_end,0)
 
    img_padded = cv2.copyMakeBorder(img_gray,np.abs(padded_top),np.abs(padded_bottom), np.abs(padded_left), np.abs(padded_right),cv2.BORDER_CONSTANT, value=0 )
+   cv2.imwrite("img_paded.jpg",img_padded)
+   print("top:",padded_top)
    return img_padded, x_start, x_end, y_start, y_end, padded_top, padded_left, padded_bottom, padded_right
 
-def template_matching(img_gray, template_gray, boxes):
-   img_roi = img_gray[boxes[1]: boxes[1] + boxes[3], boxes[0]: boxes[0] + boxes[2]]
+def template_matching(img_gray, template_gray, boxes,  x_start, x_end, y_start, y_end, padded_top, padded_left, padded_bottom, padded_right):
+   img_roi = img_gray[np.abs(y_start) : np.abs(y_end)  ,np.abs(x_start) : np.abs(x_end)  ]
    cv2.imwrite( "img_roi.jpg",img_roi)
    #cần mở vòng ảnh to hơn để thuận tiện trong việc matching
 
 def match_pattern(img_gray, template_gray, boxes, sub_angle, method, threshold ):
    _,_, w_temp,h_temp = rotate_object(template_gray,sub_angle)
-   epsilon_w, epsilon_h = np.abs((boxes[2]-w_temp, boxes[3]-h_temp))
+   epsilon_w, epsilon_h = np.abs(boxes[2]-w_temp), np.abs(boxes[3]-h_temp)
    img_padded, x_start, x_end, y_start, y_end, top, left, bottom, right = padded_image(img_gray,boxes, epsilon_w, epsilon_h)
    
-   template_matching(img_gray, template_gray, boxes )
+   template_matching(img_gray, template_gray, boxes,  x_start, x_end, y_start, y_end, top, left, bottom, right)
 
    # print("point mark: ", point)
    # return point
