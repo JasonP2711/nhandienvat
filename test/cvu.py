@@ -86,11 +86,6 @@ def cvu_process():
             threshold = 0.95
             point = match_pattern(gray_img, template_gray, bboxes, angle, eval(method))
 
-            minus_sub_angles = angle + minus_modify_angle
-            plus_sub_angles = angle + plus_modify_angle
-            # print(minus_sub_angles,plus_sub_angles)
-            minus_length = len(minus_sub_angles)
-            plus_length = len(plus_sub_angles)
               
             if point is None:
                 continue
