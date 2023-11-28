@@ -2154,5 +2154,130 @@ V1% = V151%
 SOCKCLOSE 1
 EXIT
 
+//////////////////////test socket:
+python server:
+# server.py
+import socket
+import numpy as np
+import struct
+
+
+# Định nghĩa host và port mà server sẽ chạy và lắng nghe
+host = '172.25.144.1'
+port = 48951
+
+
+
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+s.bind((host, port))
+s.listen(1)  # Chỉ chấp nhận 1 kết nối đồng thời
+print("Server listening on port", port)
+data_arr = [225.56,255.3,301.4,186.2]
+
+
+
+
+try:
+    while True:
+        c, addr = s.accept()
+        print("Connected from", str(addr))
+
+        # # Server sử dụng kết nối để gửi dữ liệu tới client dưới dạng binary
+        # c.send(b"Hello, how are you")
+
+        # Nhận 1 byte dữ liệu từ client
+        data = c.recv(1)
+        # decode_data = struct.unpack('!f', data)[0]
+        decode_data = int.from_bytes(data, byteorder='little')
+        print(f"Received data: {decode_data}")
+        if decode_data == 56:
+            for element in data_arr:
+
+                
+                print("hjkhjk: ",element)
+                byte_value = struct.pack('!1f', element)
+                c.sendall(byte_value)
+                print(f"Dữ liệu gui từ server: {byte_value}")
+
+        # if decode_data == "8":
+        #     for element in data_arr:
+        #         byte_value = struct.pack('!i', element)
+        #         c.send(byte_value)
+        #         print(f"Dữ liệu gửi từ server: {element}")
+
+    
+
+
+        # c.close()
+
+except Exception as e:
+    print("Error:", str(e))
+
+finally:
+    print("loi")
+    s.close()
+
+main:
+
+REM "TEST CONNECT SOCKET"
+DIM CLOSE AS INTEGER
+REM "HOME POSITION"
+MOVEX A=1, M1X, P, (477.02, 24.34, 535.0, -54.0, -22.33, 25.11), R=40, H=31, MS
+V50% = 1
+V27% = 0
+V3! = 0
+V1%=0
+V4%=0
+FORKMCR 3, 100
+FOR V2! = 1 TO 4 STEP 1
+V4%=1
+DELAY 5
+REM "RUN"
+MOVEX A=1, M1X, P, (V3!,  24.34, 535.0, -54.0, -22.33, 25.11), R=40, H=31, MS
+SETM O10,0
+V27% = V27% + 1
+NEXT
+
+
+V50% = 0
+V1%=1
+SETM O11,0
+END
+
+usertask:
+'sample
+INCLUDE "SAMPLE"
+'CALL SOCKET COMMUNICATE
+'CREATING SOCKET
+SOCKCREATE 3,0
+'CONNECTING TO SERVER SOCKET
+SOCKCONNECT 3,1, 48951, 10
+V50% = 1
+DIM COUNT AS INTEGER
+WAITI I55
+
+SETBYTE 2,V27!,0
+'TRANSMITING DATA
+SOCKSEND 3,2,1,5,V5%
+SOCKRECV 3, 1, 16, 5, V150%
+
+WHILE (V1%=0)
+
+IF (V4%=1)
+COUNT = V27%*4 
+SET O10
+V27! = 56
+
+
+GETREAL 1, V15!, COUNT
+V3! = V15!
+V4%=0
+ENDIF
+ENDW
+
+SET O11
+'CLOSE SOCKET
+SOCKCLOSE 1
+EXIT
 
 
