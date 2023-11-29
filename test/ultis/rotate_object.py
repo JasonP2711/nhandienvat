@@ -4,14 +4,14 @@ import numpy as np
 def rotate_object(temp_image, angle):
     h_temp, w_temp = temp_image.shape[:2]
     ctr_x, ctr_y = w_temp // 2, h_temp // 2
-    print("temp w/h: ", w_temp, h_temp )
+    # print("temp w/h: ", w_temp, h_temp )
     matrix_rotate = cv2.getRotationMatrix2D((ctr_x,ctr_y), -angle ,1.0) 
      # get cos and sin value from the rotation matrix
     cos, sin = abs(matrix_rotate[0, 0]), abs(matrix_rotate[0, 1])
     # calculate new width and height after rotation (explained in section below)
     newW = int((h_temp * sin) + (w_temp * cos))
     newH = int((h_temp * cos) + (w_temp * sin))
-    print("temp rotate w/h: ",newW, newH)
+    # print("temp rotate w/h: ",newW, newH)
     # calculate new rotation center
     matrix_rotate[0, 2] += (newW / 2) - ctr_x
     matrix_rotate[1, 2] += (newH / 2) - ctr_y

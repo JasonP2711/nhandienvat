@@ -53,13 +53,16 @@ class YOLOSegmentation:
 
 def proposal_box_yolo(img,model,image_size,configScore):
     ys = YOLOSegmentation(model)
-    bboxes,masks,class_ids, score = ys.predict(img,image_size, configScore)
-    obj,_ = ys.filter_boxes(bboxes,masks,class_ids,score)
-    # tính toán góc xoay dựa vào các điểm masks(obj[1] là list các điểm masks đúng)
-    angle_test = ys.create_angle(obj[1])
-    # print("angle: ",angle_test)
-    xywh_boxes = ys.convert_xywh(obj[0])
-    
-    return list(zip(angle_test, xywh_boxes))
+    try:
+        bboxes,masks,class_ids, score = ys.predict(img,image_size, configScore)
+        obj,_ = ys.filter_boxes(bboxes,masks,class_ids,score)
+        # tính toán góc xoay dựa vào các điểm masks(obj[1] là list các điểm masks đúng)
+        angle_test = ys.create_angle(obj[1])
+        # print("angle: ",angle_test)
+        xywh_boxes = ys.convert_xywh(obj[0])
+        
+        return list(zip(angle_test, xywh_boxes))
+    except Exception as e:
+        print("Yolo detection error!")
     
 

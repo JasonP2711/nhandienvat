@@ -28,7 +28,7 @@ def template_matching(img_gray, template_gray, boxes,  x_start, x_end, y_start, 
 def match_pattern(img_gray, template_gray, boxes, sub_angle, method ):
    rotated_template,mask, w_temp,h_temp = rotate_object(template_gray,sub_angle)
    epsilon_w, epsilon_h = abs(boxes[2]-w_temp), abs(boxes[3]-h_temp)
-   print("epsilon_w, epsilon_h", epsilon_w, epsilon_h,boxes[2],boxes[3])
+   # print("epsilon_w, epsilon_h", epsilon_w, epsilon_h,boxes[2],boxes[3])
    img_padded, x_start, x_end, y_start, y_end, top, left, bottom, right = padded_image(img_gray,boxes, epsilon_w, epsilon_h)
    
    img_roi = template_matching(img_padded, template_gray, boxes,  x_start, x_end, y_start, y_end, top, left, bottom, right)
