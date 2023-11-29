@@ -15,6 +15,7 @@ def rotate_template(template_gray, angle):
    
     pixel_array = np.full((h, w, 1), (255), dtype=np.uint8)
     mask = cv2.warpAffine(pixel_array, M, (newW, newH))
+    cv2.imwrite("mask_rota.jpg",mask)
     
     return result, mask, newH, newW
     

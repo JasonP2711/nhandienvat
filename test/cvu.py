@@ -1,4 +1,5 @@
-from flask import Flask, request
+from flask import Flask, request,jsonify
+import numpy as np
 from components import *
 from ultis import *
 from ultralytics import YOLO
@@ -56,14 +57,14 @@ def cvu_process():
       low_clip=5.0
       high_clip=97.0
       copy_of_template_gray = contrast_stretching(copy_of_template_gray,  low_clip,high_clip)
-      # copy_of_template_gray = contrast_stretching(copy_of_template_gray)
       _, copy_of_template_gray = cv2.threshold(copy_of_template_gray, 100, 255, cv2.THRESH_BINARY_INV)
       intensity_of_template_gray = np.sum(copy_of_template_gray == 0)
+      good_points = []
       try:
             object_item = proposal_box_yolo(imgLink,modelLink,img_size,configScore)#object_item sẽ gồm list thông tin góc và tọa độ của đường bao
             print("in4: ", object_item)
             #Result array
-            good_points = []
+            
             for angle,bboxes in object_item:
                   center_obj, possible_grasp_ratio  = find_center2(gray_img,bboxes,low_clip,high_clip, intensity_of_template_gray)
                   cv2.circle(img, (center_obj[0],center_obj[1]), 1, (0,0,255))      
@@ -83,15 +84,21 @@ def cvu_process():
                   point = match_pattern(gray_img, template_gray, bboxes, angle, eval(method)) 
                   if point is None:
                         continue
-                  compare_angle(point,minus_sub_angles,plus_sub_angles, gray_img, template_gray, bboxes, angle, eval(method))
+                  bestAngle, bestPoint = compare_angle(point,minus_sub_angles,plus_sub_angles, gray_img, template_gray, bboxes, angle, eval(method))
                   
             # cv2.imwrite("amTam.jpg",img)
-      
+                  print("total: ",center_obj,bestAngle,possible_grasp_ratio)
+                  result = [center_obj,bestAngle,possible_grasp_ratio]
+                  good_points.append(result)
             # resize(imgLink,pathSaveOutputImg)
-            return f'<div><h1>Result: </h1><p>{center_obj}</p><span>{possible_grasp_ratio}</span></div>'
+            print("good point arr: ",good_points)
+            
+            # print("good : ",good_points[1][0][0])
+            # return f'<div><h1>Result: </h1>{good_points}</div>'
+            return jsonify(good_points)
       except Exception as e:
            print("System error!")
-           return 
+           return f'<div><h1>Result: </h1>ERROR></div>'
 
   if request.method == "GET":
        return f'<div><h1>Get result</h1></div>'

@@ -20,7 +20,7 @@ def rotate_object(temp_image, angle):
     arr_mask = np.full((h_temp, w_temp,1),(255), dtype=np.uint8)
     mask = cv2.warpAffine(src=arr_mask, M=matrix_rotate, dsize=(newW, newH))
     cv2.imwrite( "template_rotation.jpg",rotated_image)
-    
+    cv2.imwrite("mask_rota.jpg",mask)
     # cv2.imshow('Original image', temp_image)
     # cv2.imshow('Rotated image', rotated_image)
     # cv2.imshow('mask image', mask)

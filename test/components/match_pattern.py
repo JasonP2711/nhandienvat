@@ -18,21 +18,17 @@ def padded_image(img_gray, bboxes, esilon_w,epsilon_h):
    # print("paded: ",padded_left, padded_top, padded_right, padded_bottom)
    img_padded = cv2.copyMakeBorder(img_gray,abs(padded_top),abs(padded_bottom), abs(padded_left), abs(padded_right),cv2.BORDER_CONSTANT, value=0 )
    cv2.imwrite("img_paded.jpg",img_padded)
-   return img_padded, x_start, x_end, y_start, y_end, padded_top, padded_left, padded_bottom, padded_right
+   return img_padded, x_start, x_end, y_start, y_end
 
-def template_matching(img_gray, template_gray, boxes,  x_start, x_end, y_start, y_end, padded_top, padded_left, padded_bottom, padded_right):
-   img_roi = img_gray[abs(y_start) : abs(y_end)  ,abs(x_start) : abs(x_end)  ]
-   cv2.imwrite( "img_roi.jpg",img_roi)
-   return img_roi
 
 def match_pattern(img_gray, template_gray, boxes, sub_angle, method ):
    rotated_template,mask, w_temp,h_temp = rotate_object(template_gray,sub_angle)
    epsilon_w, epsilon_h = abs(boxes[2]-w_temp), abs(boxes[3]-h_temp)
    # print("epsilon_w, epsilon_h", epsilon_w, epsilon_h,boxes[2],boxes[3])
-   img_padded, x_start, x_end, y_start, y_end, top, left, bottom, right = padded_image(img_gray,boxes, epsilon_w, epsilon_h)
+   img_padded, x_start, x_end, y_start, y_end = padded_image(img_gray,boxes, epsilon_w, epsilon_h)
    
-   img_roi = template_matching(img_padded, template_gray, boxes,  x_start, x_end, y_start, y_end, top, left, bottom, right)
-
+   img_roi = img_gray[abs(y_start) : abs(y_end)  ,abs(x_start) : abs(x_end)  ]
+   cv2.imwrite( "img_roi.jpg",img_roi)
    matched_points = cv2.matchTemplate(img_roi, rotated_template, method, None, mask)
    _, max_val, _, max_loc = cv2.minMaxLoc(matched_points)
    print("point mark: ", max_val)
