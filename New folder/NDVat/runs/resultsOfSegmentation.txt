@@ -2280,4 +2280,175 @@ SET O11
 SOCKCLOSE 1
 EXIT
 
+/////////////////////////////////////////
+REM "TEST CONNECT SOCKET"
+DIM CLOSE AS INTEGER
+REM "NUMBER OF OBJECT DETECT
+V20!=0
+REM "HOME POSITION"
+MOVEX A=1, M1X, P, (477.02, 24.34, 535.0, -54.0, -22.33, 25.11), R=40, H=31, MS
+V15!=0
+V27% = 0
+V3! = 0
+V4! = 0
+V5! = 0
+V6! = 0
+V1%=0
+V5%=0
+V4%=0
+FORKMCR 3, 100
+V4%=1
+FOR V30! = 1 TO V20! STEP 1
+FOR V2! = 1 TO 4 STEP 1
+V5%=1
+DELAY 1
+REM "RUN"
+MOVEX A=1, M1X, P, (477.02, 24.34, 535.0, -54.0, -22.33, 25.11), R=40, H=31, MS
+SETM O10,0
+
+NEXT
+V20!=0
+NEXT
+IF I50 = 1
+V50% = 1
+V27% = 0
+V3! = 0
+V4%=1
+DELAY 5
+GOTO 14
+ENDIF
+V1%=1
+SETM O11,0
+END
+
+///////////////////////
+'sample
+INCLUDE "SAMPLE"
+'CALL SOCKET COMMUNICATE
+'CREATING SOCKET
+SOCKCREATE 3,0
+DIM COUNT AS INTEGER
+WAITI I55
+IF (V4%=1)
+SET O10
+'CONNECTING TO SERVER SOCKET
+SOCKCONNECT 3,1, 48951, 10
+V27! = 1
+SETBYTE 2,V27!,0
+'TRANSMITING DATA
+SOCKSEND 3,2,1,5,V5%
+SOCKRECV 3, 2, 36, 15, V150%
+'lay do dai
+GETREAL 2, V15!, 0
+V20!=V15!
+V27% = V27% + 1
+V4%=0
+ENDIF
+IF(V5%=1)
+GETREAL 2, V15!, V27%*4
+V3! = V15!
+V27%=V27%+1
+GETREAL 2, V15!, V27%*4
+V4! = V15!
+V27%=V27%+1
+GETREAL 2, V15!, V27%*4
+V5! = V15!
+V27%=V27%+1
+GETREAL 2, V15!, V27%*4
+V6! = V15!
+V27%=V27%+1
+V5%=0
+ENDIF
+IF (V1%=0)
+GOTO 7
+ENDIF
+
+SET O11
+'CLOSE SOCKET
+SOCKCLOSE 1
+EXIT
+/////////////////////////////////////////////
+# server.py
+import socket
+import numpy as np
+import struct
+import requests
+import time
+
+# Định nghĩa host và port mà server sẽ chạy và lắng nghe
+host = '172.25.144.1'
+port = 48951
+
+headers = {"Content-Type": "application/json", "Authorization": "Bearer your_token"}
+
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+s.bind((host, port))
+s.listen(1)  # Chỉ chấp nhận 1 kết nối đồng thời
+print("Server listening on port", port)
+# data_arr=[]
+
+
+
+
+try:
+    while True:
+        c, addr = s.accept()
+        print("Connected from", str(addr))
+
+        # # Server sử dụng kết nối để gửi dữ liệu tới client dưới dạng binary
+        # c.send(b"Hello, how are you")
+        while True:
+            # Nhận 1 byte dữ liệu từ client
+            data = c.recv(1)
+            # decode_data = struct.unpack('!f', data)[0]
+            decode_data = int.from_bytes(data, byteorder='little')
+            print(f"Received data: {decode_data}")
+            if decode_data == 1:
+                # for i in range(len(data_arr)):
+                #     data_arr[i] = data_arr[i] + 10
+                # for element in data_arr:
+                    
+                #     print("hjkhjk: ",element)
+                #     byte_value = struct.pack('!1f', element)
+                #     c.sendall(byte_value)
+                #     print(f"Dữ liệu gui từ server: {byte_value}")
+                #     # ////////////////////////////////
+                api_url = "http://127.0.0.1:5000/cvu_process"
+                form_data={
+                    "imgLink" : r"C:\Users\TKD01A-1\Documents\yolov8_test\nhandienvat-main\nhandienvat-main\test\dataset_specialItems\train\images\20230922_155434_jpg.rf.ac089e9cd5afade05e7ba5d035c4d823.jpg",
+                    "templateLink" : r"C:\Users\TKD01A-1\Documents\yolov8_test\nhandienvat-main\nhandienvat-main\test\template.jpg",
+                    "modelLink" : r"C:\Users\TKD01A-1\Documents\yolov8_test\nhandienvat-main\nhandienvat-main\test\runs\segment\train\weights\last.pt",
+                    "pathSaveOutputImg" : "",
+                    "csvLink" : "",
+                    "outputImgLink" : "",
+                    "min_modify" : "-20",
+                    "max_modify" : "20",
+                    "configScore" : "0.9",
+                    "img_size" : "640",
+                    "method" : "cv2.TM_CCORR_NORMED",
+                    "server_ip" : ""
+                }
+                response = requests.post(api_url, data=form_data)
+                if response.status_code == 200:
+                    print("respons and type: ", response.json(), type(response))
+                    data_arr = response.json()
+                    byte_value_length = struct.pack('!1f', len(data_arr))
+                    c.sendall(byte_value_length)
+                    print(f"Dữ liệu gui từ server: {byte_value_length}")
+                    for object in data_arr:
+                        for element in object:
+                            print("hjkhjk: ",element)
+                            byte_value = struct.pack('!f', element)
+                            c.sendall(byte_value)
+                            print(f"Dữ liệu gui từ server: {byte_value}")
+                    print("done!!")
+                    break
+            # c.close()
+
+except Exception as e:
+    print("Error:", str(e))
+
+finally:
+    print("loi")
+    s.close()
 
