@@ -1,49 +1,65 @@
+
 import cv2
 import numpy as np
 from ultis.processing_image import contrast_stretching
+import time
 
-def find_center2(gray_img,bboxes, low_clip,high_clip,intensity_of_template_gray):
-    
+
+def find_center2(gray_img,bboxes, low_clip,high_clip,intensity_of_template_gray,findCenter_type,result_queue):
+    # print("time excute: ", time.time())
     x1,y1,w,h = bboxes[0], bboxes[1], bboxes[2], bboxes[3]
+    # c1,c2 = x1 + w/2, y1 + h/2
+    center_obj = (0,0)
     if(x1<10 or y1 <10):
-     gray_img = cv2.copyMakeBorder(gray_img,10,10, 10, 10,cv2.BORDER_CONSTANT, value=0 )
-    imgRoi = gray_img[y1 - 5:y1+h +5,x1 - 5:x1+w +5]
+     gray_img = cv2.copyMakeBorder(gray_img,20,20, 20, 20,cv2.BORDER_CONSTANT, value=0 )
+    imgRoi = gray_img[y1 - 3:y1+h +3,x1 - 3:x1+w +3]
+    # cv2.imwrite("roi_findCenter.jpg",imgRoi)
     
-    cv2.imwrite("roi_findCenter.jpg",imgRoi)
-    
-    padded_roi_gray = gray_img[y1-5:y1+h + 5,x1-5:x1+w + 5]
+    padded_roi_gray = gray_img[y1-20:y1+h + 20,x1-20:x1+w + 20]
     
     thresholdImg = contrast_stretching(imgRoi,low_clip,high_clip)
-    cv2.imwrite("thes.jpg",thresholdImg)
-    padded_thresholdImg = contrast_stretching(imgRoi,  low_clip,high_clip)
+    
+    padded_thresholdImg = contrast_stretching(padded_roi_gray,  low_clip,high_clip)
     _,thresholdImg = cv2.threshold(thresholdImg,100,255, cv2.THRESH_BINARY_INV)
+    # cv2.imwrite("thes1.jpg",padded_thresholdImg)
     _,padded_roi_gray = cv2.threshold(padded_thresholdImg,100,255, cv2.THRESH_BINARY_INV)
     intensity_of_roi_gray = np.sum(padded_roi_gray == 0)
+    # print("intensity_of_roi_gray: ",intensity_of_roi_gray)
+    # print("intensity_of_temp_gray: ",intensity_of_template_gray)
     possible_grasp_ratio = (intensity_of_template_gray / intensity_of_roi_gray) * 100
-    try:
-        contours,_ = cv2.findContours(thresholdImg,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
-        largest_contour = max(contours, key=len)
+    # print("possible_grasp_ratio: ",possible_grasp_ratio)
+    if findCenter_type == 0:
+        try:
+            contours,_ = cv2.findContours(thresholdImg,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
+            # print("len: ",len(contours))
+            check_true = False
+            for element in contours:
+                s = cv2.contourArea(element)
+                # print('S contour: ',s)
+                if s < 1500 or s > 3000:
+                    continue
+                check_true = True
+                (x_axis, y_axis), radius = cv2.minEnclosingCircle(element)
+                center = (int(x_axis + x1),int(y_axis + y1)) 
+                radius = int(radius) 
+                # print("kq: ",(int(abs(center[0] - c1)),int( abs(center[1] - c2))))
+                # result = (int(c1 + abs(center[0] - c1)/2),int(c2 + abs(center[1] - c2)/2))
+                cv2.circle(gray_img,center,radius,(0,255,0),1) 
+                cv2.circle(gray_img,center,1,(255,255,0),3) 
+                # cv2.imwrite("thes.jpg",gray_img)
+                center_obj = (center[0],center[1])
+            if check_true == False:
+                center_obj = (None, None)
 
-        s = cv2.contourArea(largest_contour)
-        if s > 4000:
-            
-            # Tính moments của đường viền được chọn
-            moments = cv2.moments(largest_contour)
+        except Exception as e:
+                # print("S < 1500 or s > 3000")
+                center_obj = (None, None)
 
-        # Tính tọa độ tâm (x, y)
-            center_x = int(moments['m10'] / moments['m00'])
-            center_y = int(moments['m01'] / moments['m00'])
-            cv2.circle(imgRoi, (int(center_x),int(center_y)), 1, (0,0,255))
-            cv2.imwrite("out.jpg", imgRoi)
-            center_obj = (center_x + x1, center_y + y1)
-            
-        
-        else:
-            center_obj = (x1 + w/2, y1 + h/2)
-    except Exception as e:
-            center_obj = (x1 + w/2, y1 + h/2)
-
-
+    result_queue.append((center[0],center[1],possible_grasp_ratio))
+    
     return center_obj, possible_grasp_ratio
+
+
+
 
 

@@ -1,23 +1,21 @@
+
 import cv2
-import numpy as np
 from ultis.rotate_object import rotate_object 
 import logging
+
 
 logger = logging.getLogger(__name__)
 # mở rộng khung ảnh một khi tọa độ bbox ở sát khung ảnh, cản trở việc roi đối tượng
 def padded_image(img_gray, bboxes, esilon_w,epsilon_h):
    # print("b0,b1", bboxes[0],  bboxes[1])
-   x_start = bboxes[0] - esilon_w
-   y_start = bboxes[1] - epsilon_h
-   x_end = bboxes[0] + bboxes[2] + esilon_w
-   y_end = bboxes[1] + bboxes[3] + epsilon_h
-   padded_left = min(x_start,0)
-   padded_top = min(y_start,0)
-   padded_right = min(img_gray.shape[1] - x_end, 0)
-   padded_bottom = min(img_gray.shape[0] - y_end,0)
+   x_start,y_start  = bboxes[0] - esilon_w, bboxes[1] - epsilon_h
+   x_end, y_end = bboxes[0] + bboxes[2] + esilon_w, bboxes[1] + bboxes[3] + epsilon_h
+   padded_left, padded_top = min(x_start,0), min(y_start,0)
+   padded_right, padded_bottom = min(img_gray.shape[1] - x_end, 0), min(img_gray.shape[0] - y_end,0)
+    
    # print("paded: ",padded_left, padded_top, padded_right, padded_bottom)
    img_padded = cv2.copyMakeBorder(img_gray,abs(padded_top),abs(padded_bottom), abs(padded_left), abs(padded_right),cv2.BORDER_CONSTANT, value=0 )
-   cv2.imwrite("img_paded.jpg",img_padded)
+   # cv2.imwrite("img_paded.jpg",img_padded)
    return img_padded, x_start, x_end, y_start, y_end
 
 
@@ -26,12 +24,11 @@ def match_pattern(img_gray, template_gray, boxes, sub_angle, method ):
    epsilon_w, epsilon_h = abs(boxes[2]-w_temp), abs(boxes[3]-h_temp)
    # print("epsilon_w, epsilon_h", epsilon_w, epsilon_h,boxes[2],boxes[3])
    img_padded, x_start, x_end, y_start, y_end = padded_image(img_gray,boxes, epsilon_w, epsilon_h)
-   
-   img_roi = img_gray[abs(y_start) : abs(y_end)  ,abs(x_start) : abs(x_end)  ]
-   cv2.imwrite( "img_roi.jpg",img_roi)
+   img_roi = img_padded[abs(y_start) : abs(y_end)  ,abs(x_start) : abs(x_end)]
+   # cv2.imwrite( "img_roi.jpg",img_roi)
    matched_points = cv2.matchTemplate(img_roi, rotated_template, method, None, mask)
-   _, max_val, _, max_loc = cv2.minMaxLoc(matched_points)
-   print("point mark: ", max_val)
+   _, max_val, _, _ = cv2.minMaxLoc(matched_points)
+   # print("point mark: ", max_val)
    return max_val
 
 
