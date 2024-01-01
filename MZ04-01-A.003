@@ -1,0 +1,94 @@
+REM "CALL SOCKET AND GET 
+DIM INDEX_POSITION AS INTEGER
+INDEX_POSITION=1
+DIM XC AS SINGLE
+DIM YC AS SINGLE
+XC = 245.0
+YC = 51.59
+WHILE INDEX_POSITION < 12
+
+'MOVEX A=1, M1X, P, (XC, YC,540.0, -43.9, -1, -180), R=10, H=31, MS, CONF=0000
+'DELAY 1
+'MOVEX A=1, M1X, P, (XC, YC, 300.0, -43.9, -1, -180), R=10, H=31, MS, CONF=0000
+'CallProc moveCommand(XC,YC)
+INDEX_POSITION=INDEX_POSITION+1
+ENDW
+END
+'UsrProc moveCommand(CoordX AS SINGLE, CoordY AS SINGLE)
+'DIM Xc AS SINGLE
+'DIM Yc AS SINGLE
+'Xc=CoordX
+'Yc=CoordY
+'USE 4
+'MOVEX A=1, M1X, P, (Xc, Yc,540.0, -43.9, -1, -180), R=10, H=31, MS, CONF=0000
+'DELAY 1
+'MOVEX A=1, M1X, P, (Xc, Yc, 300.0, -43.9, -1, -180), R=10, H=31, MS, CONF=0000
+'EndProc
+
+
+
+'ACTIVE
+'REM "MOVE TO PALLET POSITION"
+'DIM INDEX_PALLET AS INTEGER
+'DIM posCurrent AS POSITION 
+'DIM sngPosition[7] AS SINGLE
+'INDEX_PALLET=1
+'
+'WHILE INDEX_PALLET < 5
+'USE 3
+'MOVEX A=1, M1X, P, P[INDEX_PALLET], R=10, H=31, MS, CONF=0000
+'GETPOS 0, 1, posCurrent, 0, 1
+'OPEPOS 1, posCurrent, sngPosition[1], 0, 0
+'sngPosition[3] = sngPosition[3] - 100
+'OPEPOS 1, posCurrent, sngPosition[1], 0, 1
+'USE 4
+'POS2POSE 1, posCurrent, 0, 1, P50
+'MOVEX A=1, M1X, P, P50, R=10, H=31, MS, CONF=0000
+'INDEX_PALLET=INDEX_PALLET+1
+'ENDW
+'END
+
+
+'REM "TEST"
+'DIM posCurrent AS POSITION 
+'DIM sngPosition[7] AS SINGLE
+'USE 3
+'MOVEX A=1, M1X, P, P1, R=10, H=31, MS, CONF=0000
+'GETPOS 0, 1, posCurrent, 0, 1
+'OPEPOS 1, posCurrent, sngPosition[1], 0, 0
+'sngPosition[1] = sngPosition[1] + 100
+'sngPosition[2] = sngPosition[2] + 100
+'sngPosition[3] = sngPosition[3] - 100
+'sngPosition[4] = sngPosition[4] 
+'sngPosition[5] = sngPosition[5] 
+'sngPosition[6] = sngPosition[6]
+'sngPosition[7] = sngPosition[7] 
+'OPEPOS 1, posCurrent, sngPosition[1], 0, 1
+'USE 4
+'POS2POSE 1, posCurrent, 0, 1, P1
+'MOVEX A=1, M1X, P, P1, R=10, H=31, MS, CONF=0000
+'END
+
+
+'REM "ROBOT PROGRAM"
+'DIM XC AS SINGLE
+'DIM YC AS SINGLE
+'DIM ZC AS SINGLE
+'XC = 425
+'YC = -51.59
+'ZC = 567.0
+'USE 3
+'MOVEX A=1, M1X, P, (425, -51.59, 567.0, -46.0, -34, 161), R=10, H=31, MS
+'DELAY 0.5
+'MOVEX A=1, M1X, P, (319.24, 287.25, 563.0, -46.0, 0, -150), R=10, H=31, MS
+'DELAY 0.5
+'MOVEX A=1, M1X, P, (489.27, 103.36, 436.89, -46.0,  0, -150), R=10, H=31, MS
+'CallProc moveCommand(XC,YC)
+'END
+'
+'UsrProc moveCommand(CoordX AS SINGLE, CoordY AS SINGLE)
+'P20 = (CoordX, CoordY, 567.0, -46.0, -34, 161)
+'MOVEX A=1, M1X, P, P20, R=10, H=31, MS
+'P30 = (CoordX, CoordY, 237.0, -46.0, -34, 161)
+'MOVEX A=1, M1X, P, P30, R=10, H=31, MS
+'EndProc
